@@ -39,17 +39,17 @@ public class DashboardFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(306, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(228, 228, 228)
                 .addComponent(jLabel1)
-                .addGap(224, 224, 224))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(153, 153, 153)
+                .addGap(119, 119, 119)
                 .addComponent(jLabel1)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
 
         pack();
