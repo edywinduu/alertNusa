@@ -28,6 +28,8 @@ public class DashboardFrame extends javax.swing.JFrame {
         panelHeader = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         panelContent = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AlertNusa v1.0 - Pusat Informasi Kebencanaan");
@@ -199,7 +201,7 @@ public class DashboardFrame extends javax.swing.JFrame {
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHeaderLayout.createSequentialGroup()
-                .addContainerGap(493, Short.MAX_VALUE)
+                .addContainerGap(600, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(17, 17, 17))
         );
@@ -215,15 +217,35 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         panelContent.setBackground(new java.awt.Color(24, 24, 24));
 
+        jLabel8.setFont(new java.awt.Font("Poppins Medium", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Selamat Datang di Aplikasi AlertNusa!");
+
+        jLabel9.setFont(new java.awt.Font("Poppins ExtraBold", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("DASHBOARD");
+
         javax.swing.GroupLayout panelContentLayout = new javax.swing.GroupLayout(panelContent);
         panelContent.setLayout(panelContentLayout);
         panelContentLayout.setHorizontalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 653, Short.MAX_VALUE)
+            .addGroup(panelContentLayout.createSequentialGroup()
+                .addGap(303, 303, 303)
+                .addComponent(jLabel9)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContentLayout.createSequentialGroup()
+                .addContainerGap(157, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(142, 142, 142))
         );
         panelContentLayout.setVerticalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGroup(panelContentLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addContainerGap(506, Short.MAX_VALUE))
         );
 
         panelMain.add(panelContent, java.awt.BorderLayout.CENTER);
@@ -283,6 +305,8 @@ public class DashboardFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panelContent;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel panelHeader1;
