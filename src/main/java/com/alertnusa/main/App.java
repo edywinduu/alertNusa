@@ -4,7 +4,7 @@
 
 package com.alertnusa.main;
 
-import com.alertnusa.view.DashboardFrame;
+import com.alertnusa.view.coba;
 
 /**
  *
@@ -12,6 +12,6 @@ import com.alertnusa.view.DashboardFrame;
  */
 public class App {
     public static void main(String[] args) {
-        new DashboardFrame ().setVisible(true);
+        new coba ().setVisible(true);
     }
 }
