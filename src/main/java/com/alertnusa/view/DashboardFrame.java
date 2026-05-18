@@ -1,25 +1,65 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * AlertNusa v1.0 — Sistem Informasi Mitigasi Bencana
+ * DashboardFrame.java
  */
 package com.alertnusa.view;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+
 /**
+ * Dashboard utama AlertNusa.
+ * Panel sidebar dan panel konten dibangun secara programatik
+ * melalui helper methods; NetBeans hanya mengelola deklarasi
+ * JFrame dan dua root panel di bagian GEN-BEGIN.
  *
- * @author edy
+ * @author AlertNusa Team
  */
 public class DashboardFrame extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardFrame.class.getName());
 
-    /**
-     * Creates new form Dashboard
-     */
+    private static final java.util.logging.Logger logger =
+        java.util.logging.Logger.getLogger(DashboardFrame.class.getName());
+
+    // ── Warna Tema ─────────────────────────────────────────────
+    private static final Color BG_DARK       = new Color(18, 18, 18);
+    private static final Color BG_SIDEBAR    = new Color(25, 25, 35);
+    private static final Color BG_CARD       = new Color(35, 35, 45);
+    private static final Color BG_HEADER     = new Color(28, 28, 38);
+    private static final Color CLR_ACCENT    = new Color(0, 200, 220);
+    private static final Color CLR_WHITE     = new Color(240, 240, 240);
+    private static final Color CLR_GRAY      = new Color(140, 140, 155);
+    private static final Color CLR_GREEN     = new Color(50, 200, 100);
+    private static final Color CLR_GREEN_DRK = new Color(20, 130, 60);
+    private static final Color CLR_RED       = new Color(220, 70, 70);
+    private static final Color CLR_BORDER    = new Color(55, 55, 70);
+    private static final Color CLR_HOVER     = new Color(45, 45, 60);
+    private static final Color CLR_SELECTED  = new Color(0, 120, 140);
+
+    // ── Variabel Form (dikelola GEN-BEGIN) ─────────────────────
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel panelSidebar;
+    private javax.swing.JPanel panelMain;
+    // End of variables declaration//GEN-END:variables
+
+    // ── Variabel Tambahan (dikelola manual) ─────────────────────
+    private JProgressBar progressBar;
+    private JLabel       lblHalo;
+    private JLabel       lblProgressInfo;
+
+    // ──────────────────────────────────────────────────────────
+    //  KONSTRUKTOR
+    // ──────────────────────────────────────────────────────────
+    /** Creates new form DashboardFrame */
     public DashboardFrame() {
         initComponents();
         setLocationRelativeTo(null);
     }
 
+    // ──────────────────────────────────────────────────────────
+    //  GENERATED CODE — jangan ubah bagian ini
+    // ──────────────────────────────────────────────────────────
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,49 +69,361 @@ public class DashboardFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        panelSidebar = new javax.swing.JPanel();
+        panelMain    = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AlertNusa v1.0 \u2014 Pusat Informasi Kebencanaan");
+        setMinimumSize(new java.awt.Dimension(950, 620));
+        setPreferredSize(new java.awt.Dimension(1150, 700));
+        getContentPane().setBackground(BG_DARK);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("DASHBOARD");
+        // Bangun isi kedua panel via helper methods
+        panelSidebar = buildSidebar();
+        panelMain    = buildMainPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(228, 228, 228)
-                .addComponent(jLabel1)
-                .addContainerGap(302, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(jLabel1)
-                .addContainerGap(315, Short.MAX_VALUE))
-        );
+        getContentPane().add(panelSidebar, java.awt.BorderLayout.WEST);
+        getContentPane().add(panelMain,    java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // ════════════════════════════════════════════════════════════
+    //  SIDEBAR
+    // ════════════════════════════════════════════════════════════
+    private JPanel buildSidebar() {
+        JPanel sidebar = new JPanel();
+        sidebar.setBackground(BG_SIDEBAR);
+        sidebar.setPreferredSize(new Dimension(230, 700));
+        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+        sidebar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, CLR_BORDER));
+
+        sidebar.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        JLabel lblIcon = new JLabel("\uD83D\uDEA8", SwingConstants.CENTER);
+        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        lblIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidebar.add(lblIcon);
+
+        sidebar.add(Box.createRigidArea(new Dimension(0, 6)));
+
+        JLabel lblApp = new JLabel("AlertNusa");
+        lblApp.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblApp.setForeground(CLR_ACCENT);
+        lblApp.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidebar.add(lblApp);
+
+        JLabel lblSub = new JLabel("Sistem Informasi Bencana");
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 10));
+        lblSub.setForeground(CLR_GRAY);
+        lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidebar.add(lblSub);
+
+        sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidebar.add(sepLine());
+        sidebar.add(Box.createRigidArea(new Dimension(0, 18)));
+
+        JLabel lblMenuTitle = new JLabel("  NAVIGASI");
+        lblMenuTitle.setFont(new Font("Segoe UI", Font.BOLD, 9));
+        lblMenuTitle.setForeground(CLR_GRAY);
+        lblMenuTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+        sidebar.add(lblMenuTitle);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 6)));
+
+        String[][] menus = {
+            {"\uD83C\uDFE0", "Dashboard"},
+            {"\uD83C\uDF0B", "Informasi Bencana"},
+            {"\uD83D\uDEB6", "Panduan Evakuasi"},
+            {"\uD83D\uDCDE", "Kontak Darurat"},
+            {"\u2705",       "Checklist Kesiapan"}
+        };
+
+        for (int i = 0; i < menus.length; i++) {
+            JButton btn = sidebarBtn(menus[i][0] + "   " + menus[i][1]);
+            if (i == 0) btn.setBackground(CLR_SELECTED);
+            sidebar.add(btn);
+            sidebar.add(Box.createRigidArea(new Dimension(0, 2)));
+        }
+
+        sidebar.add(Box.createVerticalGlue());
+        sidebar.add(sepLine());
+        sidebar.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JButton btnLogout = sidebarBtn("\uD83D\uDD34   Keluar (Logout)");
+        btnLogout.setForeground(CLR_RED);
+        sidebar.add(btnLogout);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        return sidebar;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    //  MAIN PANEL
+    // ════════════════════════════════════════════════════════════
+    private JPanel buildMainPanel() {
+        JPanel main = new JPanel(new BorderLayout());
+        main.setBackground(BG_DARK);
+        main.add(buildHeader(), BorderLayout.NORTH);
+
+        JPanel content = new JPanel();
+        content.setBackground(BG_DARK);
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBorder(BorderFactory.createEmptyBorder(20, 22, 22, 22));
+        content.add(buildChecklistPanel());
+        content.add(Box.createRigidArea(new Dimension(0, 18)));
+        content.add(buildKatalogPanel());
+        content.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JScrollPane scroll = new JScrollPane(content);
+        scroll.setBorder(null);
+        scroll.setBackground(BG_DARK);
+        scroll.getViewport().setBackground(BG_DARK);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.getVerticalScrollBar().setUnitIncrement(14);
+
+        main.add(scroll, BorderLayout.CENTER);
+        return main;
+    }
+
+    private JPanel buildHeader() {
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(BG_HEADER);
+        header.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createMatteBorder(0, 0, 1, 0, CLR_BORDER),
+            BorderFactory.createEmptyBorder(18, 22, 18, 22)
+        ));
+
+        JPanel left = new JPanel();
+        left.setOpaque(false);
+        left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
+
+        lblHalo = new JLabel("Halo, User! \uD83D\uDC4B");
+        lblHalo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblHalo.setForeground(CLR_WHITE);
+
+        JLabel lblWelcome = new JLabel(
+            "Selamat datang di Pusat Informasi Kebencanaan AlertNusa.");
+        lblWelcome.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblWelcome.setForeground(CLR_GRAY);
+
+        left.add(lblHalo);
+        left.add(Box.createRigidArea(new Dimension(0, 5)));
+        left.add(lblWelcome);
+
+        JLabel lblDate = new JLabel("\uD83D\uDCC5  " +
+            new java.text.SimpleDateFormat("dd MMMM yyyy",
+                new java.util.Locale("id", "ID"))
+                .format(new java.util.Date()));
+        lblDate.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblDate.setForeground(CLR_GRAY);
+
+        header.add(left,    BorderLayout.WEST);
+        header.add(lblDate, BorderLayout.EAST);
+        return header;
+    }
+
+    private JPanel buildChecklistPanel() {
+        JPanel panel = new JPanel(new BorderLayout(15, 0));
+        panel.setBackground(BG_CARD);
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 115));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(CLR_BORDER),
+            BorderFactory.createEmptyBorder(14, 18, 14, 18)
+        ));
+
+        JPanel left = new JPanel();
+        left.setOpaque(false);
+        left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
+
+        JLabel lblTitle = new JLabel("\uD83D\uDCCB  Status Checklist Persiapan Anda");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblTitle.setForeground(CLR_WHITE);
+
+        lblProgressInfo = new JLabel("5 / 10 Item Selesai  (50%)");
+        lblProgressInfo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblProgressInfo.setForeground(CLR_GREEN);
+
+        progressBar = new JProgressBar(0, 100);
+        progressBar.setValue(50);
+        progressBar.setStringPainted(true);
+        progressBar.setString("50% Siap");
+        progressBar.setForeground(CLR_GREEN);
+        progressBar.setBackground(new Color(50, 50, 65));
+        progressBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+        progressBar.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        progressBar.setBorder(null);
+
+        left.add(lblTitle);
+        left.add(Box.createRigidArea(new Dimension(0, 6)));
+        left.add(lblProgressInfo);
+        left.add(Box.createRigidArea(new Dimension(0, 8)));
+        left.add(progressBar);
+
+        JButton btnLanjut = new JButton("Lanjutkan Checklist  \u27A1");
+        btnLanjut.setBackground(CLR_GREEN_DRK);
+        btnLanjut.setForeground(CLR_WHITE);
+        btnLanjut.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnLanjut.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 20));
+        btnLanjut.setFocusPainted(false);
+        btnLanjut.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnLanjut.addMouseListener(new MouseAdapter() {
+            @Override public void mouseEntered(MouseEvent e) { btnLanjut.setBackground(CLR_GREEN); }
+            @Override public void mouseExited (MouseEvent e) { btnLanjut.setBackground(CLR_GREEN_DRK); }
+        });
+
+        panel.add(left,      BorderLayout.CENTER);
+        panel.add(btnLanjut, BorderLayout.EAST);
+        return panel;
+    }
+
+    private JPanel buildKatalogPanel() {
+        JPanel wrapper = new JPanel(new BorderLayout(0, 12));
+        wrapper.setOpaque(false);
+
+        JLabel lblKatalog = new JLabel(
+            "\uD83D\uDDC2\uFE0F   KATALOG INFORMASI BENCANA");
+        lblKatalog.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblKatalog.setForeground(CLR_WHITE);
+        wrapper.add(lblKatalog, BorderLayout.NORTH);
+
+        JPanel grid = new JPanel(new GridLayout(2, 2, 12, 12));
+        grid.setOpaque(false);
+
+        Object[][] data = {
+            {"\uD83D\uDD34", "Gempa Bumi",
+             "Panduan keselamatan saat gempa bumi terjadi, termasuk langkah evakuasi dan titik kumpul.",
+             new Color(180, 60, 60)},
+            {"\uD83D\uDD35", "Tsunami",
+             "Panduan keselamatan menghadapi ancaman gelombang tsunami di wilayah pesisir.",
+             new Color(50, 100, 180)},
+            {"\uD83D\uDFE3", "Banjir",
+             "Panduan keselamatan saat musim hujan dan banjir melanda kawasan pemukiman.",
+             new Color(120, 60, 180)},
+            {"\uD83D\uDFE0", "Kebakaran",
+             "Panduan keselamatan di lingkungan padat saat kebakaran terjadi di sekitar Anda.",
+             new Color(200, 100, 30)}
+        };
+
+        for (Object[] item : data) {
+            grid.add(makeBencanaCard(
+                (String) item[0],
+                (String) item[1],
+                (String) item[2],
+                (Color)  item[3]
+            ));
+        }
+
+        wrapper.add(grid, BorderLayout.CENTER);
+        return wrapper;
+    }
+
+    private JPanel makeBencanaCard(String icon, String nama,
+                                   String desc, Color accentColor) {
+        JPanel card = new JPanel(new BorderLayout(0, 10));
+        card.setBackground(BG_CARD);
+        card.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createMatteBorder(0, 4, 0, 0, accentColor),
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(CLR_BORDER),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            )
+        ));
+
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        top.setOpaque(false);
+
+        JLabel lblIconCard = new JLabel(icon + "  ");
+        lblIconCard.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+
+        JLabel lblNama = new JLabel(nama);
+        lblNama.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblNama.setForeground(CLR_WHITE);
+
+        top.add(lblIconCard);
+        top.add(lblNama);
+
+        JLabel lblDesc = new JLabel(
+            "<html><p style='width:200px;color:#8f8fa0;font-size:11px'>"
+            + desc + "</p></html>");
+
+        JButton btnDetail = new JButton("[ Baca Detail ]");
+        btnDetail.setBackground(new Color(40, 40, 55));
+        btnDetail.setForeground(CLR_ACCENT);
+        btnDetail.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        btnDetail.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(CLR_BORDER),
+            BorderFactory.createEmptyBorder(6, 12, 6, 12)
+        ));
+        btnDetail.setFocusPainted(false);
+        btnDetail.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnDetail.addMouseListener(new MouseAdapter() {
+            @Override public void mouseEntered(MouseEvent e) { btnDetail.setBackground(CLR_HOVER); }
+            @Override public void mouseExited (MouseEvent e) { btnDetail.setBackground(new Color(40, 40, 55)); }
+        });
+
+        card.add(top,       BorderLayout.NORTH);
+        card.add(lblDesc,   BorderLayout.CENTER);
+        card.add(btnDetail, BorderLayout.SOUTH);
+        return card;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    //  HELPERS
+    // ════════════════════════════════════════════════════════════
+    private JButton sidebarBtn(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(BG_SIDEBAR);
+        btn.setForeground(CLR_WHITE);
+        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btn.setBorderPainted(false);
+        btn.setFocusPainted(false);
+        btn.setHorizontalAlignment(SwingConstants.LEFT);
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 22, 10, 10));
+        btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!btn.getBackground().equals(CLR_SELECTED))
+                    btn.setBackground(CLR_HOVER);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (!btn.getBackground().equals(CLR_SELECTED))
+                    btn.setBackground(BG_SIDEBAR);
+            }
+        });
+        return btn;
+    }
+
+    private JSeparator sepLine() {
+        JSeparator s = new JSeparator();
+        s.setForeground(CLR_BORDER);
+        s.setBackground(CLR_BORDER);
+        s.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        return s;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    //  MAIN
+    // ════════════════════════════════════════════════════════════
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (javax.swing.UIManager.LookAndFeelInfo info :
+                    javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ReflectiveOperationException |
+                 javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -79,8 +431,4 @@ public class DashboardFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new DashboardFrame().setVisible(true));
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
 }
