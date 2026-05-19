@@ -21,6 +21,7 @@ com\alertnusa\view\DashboardFrame.class
 com\alertnusa\view\RegisterFrame$3.class
 com\alertnusa\model\Admin.class
 com\alertnusa\view\ForgotPasswordFrame$2.class
+com\alertnusa\view\Bencana.class
 com\alertnusa\view\ForgotPasswordFrame$4.class
 com\alertnusa\model\User.class
 com\alertnusa\view\RegisterFrame$1.class
