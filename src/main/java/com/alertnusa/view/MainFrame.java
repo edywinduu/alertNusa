@@ -17,6 +17,22 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(null);
+    
+        mainContent.add(new DashboardPanel(), "dashboard_screen");
+        mainContent.add(new PreparationPanel(), "preparation_screen");
+        mainContent.add(new EvacuationPanel(), "evacuation_screen");
+        mainContent.add(new SOSPanel(), "sos_screen");
+        mainContent.add(new LoginPanel(), "login_screen");
+        mainContent.add(new RegisterPanel(), "register_screen");
+        mainContent.add(new ForgotPasswordPanel(), "fgpassword_screen");
+
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
+        cl.show(mainContent, "dashboard_screen");
+
+        mainContent.revalidate();
+        mainContent.repaint();
     }
 
     /**
@@ -28,23 +44,125 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(420, 720));
-        setResizable(false);
+        bar = new javax.swing.JPanel();
+        homeV = new javax.swing.JLabel();
+        homeV1 = new javax.swing.JLabel();
+        homeV2 = new javax.swing.JLabel();
+        homeV3 = new javax.swing.JLabel();
+        mainContent = new javax.swing.JPanel();
+        dashboardPanel1 = new com.alertnusa.view.DashboardPanel();
+        evacuationPanel1 = new com.alertnusa.view.EvacuationPanel();
+        preparationPanel1 = new com.alertnusa.view.PreparationPanel();
+        sOSPanel1 = new com.alertnusa.view.SOSPanel();
+        loginPanel1 = new com.alertnusa.view.LoginPanel();
+        registerPanel1 = new com.alertnusa.view.RegisterPanel();
+        forgotPasswordPanel1 = new com.alertnusa.view.ForgotPasswordPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(420, 720));
+
+        bar.setBackground(new java.awt.Color(40, 40, 56));
+        bar.setMaximumSize(new java.awt.Dimension(408, 60));
+        bar.setMinimumSize(new java.awt.Dimension(408, 60));
+
+        homeV.setBackground(new java.awt.Color(0, 0, 0));
+        homeV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/homeIcon.png"))); // NOI18N
+        homeV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeVMouseClicked(evt);
+            }
+        });
+
+        homeV1.setBackground(new java.awt.Color(0, 0, 0));
+        homeV1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/preparationIcon.png"))); // NOI18N
+        homeV1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV1MouseClicked(evt);
+            }
+        });
+
+        homeV2.setBackground(new java.awt.Color(0, 0, 0));
+        homeV2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/evacuationIcon.png"))); // NOI18N
+        homeV2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV2MouseClicked(evt);
+            }
+        });
+
+        homeV3.setBackground(new java.awt.Color(0, 0, 0));
+        homeV3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/emergencyIcon.png"))); // NOI18N
+        homeV3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout barLayout = new javax.swing.GroupLayout(bar);
+        bar.setLayout(barLayout);
+        barLayout.setHorizontalGroup(
+            barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(homeV)
+                .addGap(80, 80, 80)
+                .addComponent(homeV1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addComponent(homeV2)
+                .addGap(73, 73, 73)
+                .addComponent(homeV3)
+                .addGap(16, 16, 16))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+        barLayout.setVerticalGroup(
+            barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(homeV3)
+                    .addComponent(homeV2)
+                    .addComponent(homeV1)
+                    .addComponent(homeV))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        getContentPane().add(bar, java.awt.BorderLayout.SOUTH);
+
+        mainContent.setLayout(new java.awt.CardLayout());
+        mainContent.add(dashboardPanel1, "dashboard_screen");
+        mainContent.add(evacuationPanel1, "evacuation_screen");
+        mainContent.add(preparationPanel1, "preparation_screen");
+        mainContent.add(sOSPanel1, "sos_screen");
+        mainContent.add(loginPanel1, "login_screen");
+        mainContent.add(registerPanel1, "register_screen");
+        mainContent.add(forgotPasswordPanel1, "fgpassword_screen");
+
+        getContentPane().add(mainContent, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void homeV1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV1MouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
+        cl.show(mainContent, "preparation_screen");    // TODO add your handling code here:
+    }//GEN-LAST:event_homeV1MouseClicked
+
+    private void homeV2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV2MouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
+        cl.show(mainContent, "evacuation_screen");    // TODO add your handling code here:
+    }//GEN-LAST:event_homeV2MouseClicked
+
+    private void homeV3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV3MouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
+        cl.show(mainContent, "sos_screen");
+    }//GEN-LAST:event_homeV3MouseClicked
+
+    private void homeVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeVMouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
+        cl.show(mainContent, "dashboard_screen");    // TODO add your handling code here:
+    }//GEN-LAST:event_homeVMouseClicked
 
     /**
      * @param args the command line arguments
@@ -72,5 +190,18 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bar;
+    private com.alertnusa.view.DashboardPanel dashboardPanel1;
+    private com.alertnusa.view.EvacuationPanel evacuationPanel1;
+    private com.alertnusa.view.ForgotPasswordPanel forgotPasswordPanel1;
+    private javax.swing.JLabel homeV;
+    private javax.swing.JLabel homeV1;
+    private javax.swing.JLabel homeV2;
+    private javax.swing.JLabel homeV3;
+    private com.alertnusa.view.LoginPanel loginPanel1;
+    private javax.swing.JPanel mainContent;
+    private com.alertnusa.view.PreparationPanel preparationPanel1;
+    private com.alertnusa.view.RegisterPanel registerPanel1;
+    private com.alertnusa.view.SOSPanel sOSPanel1;
     // End of variables declaration//GEN-END:variables
 }

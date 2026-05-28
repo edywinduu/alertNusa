@@ -47,12 +47,19 @@ public class userSession {
         }
     }
 
-    public static boolean login(String username, String password) {
-        if (userDatabase.containsKey(username)) {
-            User user = userDatabase.get(username);
+    public static boolean login(String identifier, String password) {
+        if (userDatabase.containsKey(identifier)) {
+            User user = userDatabase.get(identifier);
             if (user.getPassword().equals(password)) {
                 currentUser = user;
                 return true;
+            }
+        } else {
+            for (User user : userDatabase.values()) {
+                if (user.getEmail().equals(identifier) && user.getPassword().equals(password)) {
+                    currentUser = user;
+                    return true;
+                }
             }
         }
         return false;
@@ -76,4 +83,13 @@ public class userSession {
         return currentUser;
     }
     
+    // Method untuk mengecek apakah ada user yang sedang login
+    public static boolean isLoggedIn() {
+        return currentUser != null;
+    }
+    
+    // Method untuk menghapus sesi user saat ini (Logout)
+    public static void logout() {
+        currentUser = null;
+    }
 }
