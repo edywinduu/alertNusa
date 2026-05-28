@@ -66,7 +66,8 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AlertNusa v1.0 - Pusat Informasi Kebencanaan");
-        setMinimumSize(new java.awt.Dimension(1000, 650));
+        setMinimumSize(new java.awt.Dimension(1050, 1100));
+        setResizable(false);
 
         panelSidebar.setBackground(new java.awt.Color(37, 37, 53));
         panelSidebar.setPreferredSize(new java.awt.Dimension(240, 650));
@@ -525,7 +526,7 @@ public class DashboardFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    Bencana formBencana = new Bencana();
+    BencanaFrame formBencana = new BencanaFrame();
     formBencana.setLocationRelativeTo(null);
     formBencana.setVisible(true);
     this.dispose();
@@ -587,7 +588,7 @@ public class DashboardFrame extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
 
-        Bencana formBencana = new Bencana();
+        BencanaFrame formBencana = new BencanaFrame();
         formBencana.setLocationRelativeTo(null);
         formBencana.setVisible(true);
         this.dispose();

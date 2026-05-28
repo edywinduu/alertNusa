@@ -1,8 +1,8 @@
 package com.alertnusa.view;
 
-public class Bencana extends javax.swing.JFrame {
+public class BencanaFrame extends javax.swing.JFrame {
 
-    public Bencana() {
+    public BencanaFrame() {
         initComponents();
     }
 
@@ -51,7 +51,10 @@ public class Bencana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AlertNusa v1.0 - Pusat Informasi Kebencanaan");
-        setMinimumSize(new java.awt.Dimension(1000, 650));
+        setMaximumSize(new java.awt.Dimension(1050, 1100));
+        setMinimumSize(new java.awt.Dimension(1050, 1100));
+        setPreferredSize(new java.awt.Dimension(1050, 1100));
+        setResizable(false);
 
         panelSidebar.setBackground(new java.awt.Color(37, 37, 53));
         panelSidebar.setPreferredSize(new java.awt.Dimension(240, 650));
@@ -167,11 +170,15 @@ public class Bencana extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
-                .addGap(48, 48, 48)
-                .addGroup(panelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(44, 44, 44)
+                .addGroup(panelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSidebarLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSidebarLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(35, 35, 35)))
                 .addGroup(panelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -534,10 +541,10 @@ public class Bencana extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Bencana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BencanaFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new Bencana().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new BencanaFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

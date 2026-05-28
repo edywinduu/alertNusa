@@ -4,7 +4,7 @@
 
 package com.alertnusa.main;
 
-import com.alertnusa.view.DashboardFrame;
+import com.alertnusa.view.DashboardFrameX;
 
 /**
  *
@@ -25,7 +25,7 @@ public class App {
 
         // 2. BARU PANGGIL DASHBOARD-NYA
         java.awt.EventQueue.invokeLater(() -> {
-            new DashboardFrame().setVisible(true);
+            new DashboardFrameX().setVisible(true);
         });
     }
 }
