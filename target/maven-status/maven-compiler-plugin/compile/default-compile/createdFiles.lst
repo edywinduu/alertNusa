@@ -25,6 +25,7 @@ com\alertnusa\view\RegisterFrame$2.class
 com\alertnusa\util\passwordValidator.class
 com\alertnusa\view\EvacuationFrameX$2.class
 com\alertnusa\view\ForgotPasswordFrame$5.class
+com\alertnusa\view\MainFrame.class
 com\alertnusa\view\RegisterFrame$5.class
 com\alertnusa\view\BencanaFrame.class
 com\alertnusa\view\LoginFrame.class

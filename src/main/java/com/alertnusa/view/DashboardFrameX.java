@@ -37,11 +37,6 @@ public class DashboardFrameX extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        homeV = new javax.swing.JLabel();
-        homeV1 = new javax.swing.JLabel();
-        homeV2 = new javax.swing.JLabel();
-        homeV3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -72,72 +67,15 @@ public class DashboardFrameX extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        homeV = new javax.swing.JLabel();
+        homeV1 = new javax.swing.JLabel();
+        homeV2 = new javax.swing.JLabel();
+        homeV3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 0, 51));
         setResizable(false);
-
-        jPanel1.setBackground(new java.awt.Color(40, 40, 56));
-        jPanel1.setMaximumSize(new java.awt.Dimension(408, 60));
-        jPanel1.setMinimumSize(new java.awt.Dimension(408, 60));
-        jPanel1.setPreferredSize(new java.awt.Dimension(408, 60));
-
-        homeV.setBackground(new java.awt.Color(0, 0, 0));
-        homeV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/homeIcon.png"))); // NOI18N
-        homeV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        homeV1.setBackground(new java.awt.Color(0, 0, 0));
-        homeV1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/preparationIcon.png"))); // NOI18N
-        homeV1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        homeV1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeV1MouseClicked(evt);
-            }
-        });
-
-        homeV2.setBackground(new java.awt.Color(0, 0, 0));
-        homeV2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/evacuationIcon.png"))); // NOI18N
-        homeV2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        homeV2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeV2MouseClicked(evt);
-            }
-        });
-
-        homeV3.setBackground(new java.awt.Color(0, 0, 0));
-        homeV3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/emergencyIcon.png"))); // NOI18N
-        homeV3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        homeV3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeV3MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(homeV)
-                .addGap(80, 80, 80)
-                .addComponent(homeV1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(homeV2)
-                .addGap(88, 88, 88)
-                .addComponent(homeV3)
-                .addGap(20, 20, 20))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(homeV3)
-                    .addComponent(homeV2)
-                    .addComponent(homeV1)
-                    .addComponent(homeV))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
@@ -223,7 +161,7 @@ public class DashboardFrameX extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,15 +360,14 @@ public class DashboardFrameX extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel4.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
@@ -470,18 +407,21 @@ public class DashboardFrameX extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(jLabel13)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,29 +441,75 @@ public class DashboardFrameX extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setBackground(new java.awt.Color(40, 40, 56));
+        jPanel1.setMaximumSize(new java.awt.Dimension(408, 60));
+        jPanel1.setMinimumSize(new java.awt.Dimension(408, 60));
+        jPanel1.setPreferredSize(new java.awt.Dimension(408, 60));
+
+        homeV.setBackground(new java.awt.Color(0, 0, 0));
+        homeV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/homeIcon.png"))); // NOI18N
+        homeV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        homeV1.setBackground(new java.awt.Color(0, 0, 0));
+        homeV1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/preparationIcon.png"))); // NOI18N
+        homeV1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV1MouseClicked(evt);
+            }
+        });
+
+        homeV2.setBackground(new java.awt.Color(0, 0, 0));
+        homeV2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/evacuationIcon.png"))); // NOI18N
+        homeV2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV2MouseClicked(evt);
+            }
+        });
+
+        homeV3.setBackground(new java.awt.Color(0, 0, 0));
+        homeV3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/alertnusa/assets/emergencyIcon.png"))); // NOI18N
+        homeV3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        homeV3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeV3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(homeV)
+                .addGap(80, 80, 80)
+                .addComponent(homeV1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(homeV2)
+                .addGap(65, 65, 65)
+                .addComponent(homeV3)
+                .addGap(16, 16, 16))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(691, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(homeV3)
+                    .addComponent(homeV2)
+                    .addComponent(homeV1)
+                    .addComponent(homeV))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
