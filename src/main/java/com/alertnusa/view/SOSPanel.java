@@ -72,7 +72,7 @@ public class SOSPanel extends javax.swing.JPanel {
 
         labelDeskripsi1.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
         labelDeskripsi1.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi1.setText("+6285737231626 (Prabowo)");
+        labelDeskripsi1.setText("+6285737231626 (Edy)");
 
         javax.swing.GroupLayout jPanelTema1Layout = new javax.swing.GroupLayout(jPanelTema1);
         jPanelTema1.setLayout(jPanelTema1Layout);

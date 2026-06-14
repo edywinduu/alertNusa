@@ -33,9 +33,11 @@ public class EvacuationPanel extends javax.swing.JPanel {
         jPanelTema1 = new javax.swing.JPanel();
         labelJudul1 = new javax.swing.JLabel();
         labelDeskripsi1 = new javax.swing.JLabel();
+        labelDeskripsi3 = new javax.swing.JLabel();
         jPanelTema2 = new javax.swing.JPanel();
         labelJudul2 = new javax.swing.JLabel();
         labelDeskripsi2 = new javax.swing.JLabel();
+        labelDeskripsi4 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -66,7 +68,7 @@ public class EvacuationPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("List Kesiapan");
+        jLabel2.setText("Katalog Bencana");
 
         jPanelTema1.setBackground(new java.awt.Color(40, 40, 56));
 
@@ -76,7 +78,11 @@ public class EvacuationPanel extends javax.swing.JPanel {
 
         labelDeskripsi1.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
         labelDeskripsi1.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi1.setText("- Berlindung di Bawah Meja");
+        labelDeskripsi1.setText("Penjelasan");
+
+        labelDeskripsi3.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
+        labelDeskripsi3.setForeground(new java.awt.Color(255, 255, 255));
+        labelDeskripsi3.setText("- Berlindung di Bawah Meja");
 
         javax.swing.GroupLayout jPanelTema1Layout = new javax.swing.GroupLayout(jPanelTema1);
         jPanelTema1.setLayout(jPanelTema1Layout);
@@ -90,6 +96,11 @@ public class EvacuationPanel extends javax.swing.JPanel {
                         .addComponent(labelDeskripsi1))
                     .addComponent(labelJudul1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTema1Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(labelDeskripsi3)
+                    .addContainerGap(226, Short.MAX_VALUE)))
         );
         jPanelTema1Layout.setVerticalGroup(
             jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,6 +110,11 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelDeskripsi1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(133, Short.MAX_VALUE))
+            .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTema1Layout.createSequentialGroup()
+                    .addGap(76, 76, 76)
+                    .addComponent(labelDeskripsi3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(97, Short.MAX_VALUE)))
         );
 
         jPanelTema2.setBackground(new java.awt.Color(40, 40, 56));
@@ -111,6 +127,10 @@ public class EvacuationPanel extends javax.swing.JPanel {
         labelDeskripsi2.setForeground(new java.awt.Color(255, 255, 255));
         labelDeskripsi2.setText("- Berlindung di Bawah Meja");
 
+        labelDeskripsi4.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
+        labelDeskripsi4.setForeground(new java.awt.Color(255, 255, 255));
+        labelDeskripsi4.setText("Penjelasan");
+
         javax.swing.GroupLayout jPanelTema2Layout = new javax.swing.GroupLayout(jPanelTema2);
         jPanelTema2.setLayout(jPanelTema2Layout);
         jPanelTema2Layout.setHorizontalGroup(
@@ -118,11 +138,13 @@ public class EvacuationPanel extends javax.swing.JPanel {
             .addGroup(jPanelTema2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelJudul2)
                     .addGroup(jPanelTema2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(labelDeskripsi2))
-                    .addComponent(labelJudul2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelDeskripsi2)
+                            .addComponent(labelDeskripsi4))))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanelTema2Layout.setVerticalGroup(
             jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,8 +152,10 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(labelJudul2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelDeskripsi4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelDeskripsi2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -141,19 +165,18 @@ public class EvacuationPanel extends javax.swing.JPanel {
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 109, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(97, 97, 97))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(142, 142, 142))))
+                .addComponent(jLabel1)
+                .addGap(97, 97, 97))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelTema1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelTema2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(121, 121, 121))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,13 +184,13 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jPanelTema1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelTema2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -183,6 +206,8 @@ public class EvacuationPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelTema2;
     private javax.swing.JLabel labelDeskripsi1;
     private javax.swing.JLabel labelDeskripsi2;
+    private javax.swing.JLabel labelDeskripsi3;
+    private javax.swing.JLabel labelDeskripsi4;
     private javax.swing.JLabel labelJudul1;
     private javax.swing.JLabel labelJudul2;
     // End of variables declaration//GEN-END:variables
