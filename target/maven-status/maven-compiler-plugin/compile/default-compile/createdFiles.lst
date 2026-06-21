@@ -1,7 +1,9 @@
 com\alertnusa\util\passwordValidator.class
+com\alertnusa\view\AdminPanel.class
 com\alertnusa\view\ForgotPasswordPanel$2.class
 com\alertnusa\view\MainFrame$3.class
 com\alertnusa\view\RegisterPanel$1.class
+com\alertnusa\view\AdminPanel$1.class
 com\alertnusa\view\LoginPanel$3.class
 com\alertnusa\view\MainFrame.class
 com\alertnusa\view\EvacuationPanel.class
@@ -13,6 +15,7 @@ com\alertnusa\view\MainFrame$1.class
 com\alertnusa\view\PreparationPanel.class
 com\alertnusa\view\DashboardPanel.class
 com\alertnusa\view\LoginPanel.class
+com\alertnusa\view\AdminPanel$2.class
 com\alertnusa\model\userSession.class
 com\alertnusa\model\Member.class
 com\alertnusa\view\LoginPanel$2.class
