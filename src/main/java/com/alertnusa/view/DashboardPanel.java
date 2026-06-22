@@ -197,6 +197,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLabel4.setText("Katalog Bencana");
 
         jPanel6.setBackground(new java.awt.Color(40, 40, 56));
+        jPanel6.setLayout(new java.awt.GridLayout(5, 1, 20, 20));
 
         jPanel7.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -241,6 +242,8 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGap(14, 14, 14))
         );
 
+        jPanel6.add(jPanel7);
+
         jPanel8.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel7.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
@@ -283,6 +286,8 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addComponent(jButton10)
                 .addGap(14, 14, 14))
         );
+
+        jPanel6.add(jPanel8);
 
         jPanel9.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -327,6 +332,8 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGap(14, 14, 14))
         );
 
+        jPanel6.add(jPanel9);
+
         jPanel10.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel11.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
@@ -366,35 +373,10 @@ public class DashboardPanel extends javax.swing.JPanel {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+        jPanel6.add(jPanel10);
 
         loginButton.setBackground(new java.awt.Color(255, 0, 0));
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -458,7 +440,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

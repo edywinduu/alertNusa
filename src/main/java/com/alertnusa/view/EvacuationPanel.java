@@ -25,19 +25,24 @@ public class EvacuationPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanelTema1 = new javax.swing.JPanel();
-        labelJudul1 = new javax.swing.JLabel();
-        labelDeskripsi1 = new javax.swing.JLabel();
-        labelDeskripsi3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanelTema4 = new javax.swing.JPanel();
+        labelJudul4 = new javax.swing.JLabel();
+        jPanelTema5 = new javax.swing.JPanel();
+        labelJudul5 = new javax.swing.JLabel();
+        jPanelTema3 = new javax.swing.JPanel();
+        labelJudul3 = new javax.swing.JLabel();
+        jPanelTema6 = new javax.swing.JPanel();
+        labelJudul6 = new javax.swing.JLabel();
         jPanelTema2 = new javax.swing.JPanel();
         labelJudul2 = new javax.swing.JLabel();
-        labelDeskripsi2 = new javax.swing.JLabel();
-        labelDeskripsi4 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -70,66 +75,137 @@ public class EvacuationPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Katalog Bencana");
 
-        jPanelTema1.setBackground(new java.awt.Color(40, 40, 56));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setToolTipText("");
 
-        labelJudul1.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        labelJudul1.setForeground(new java.awt.Color(255, 255, 255));
-        labelJudul1.setText("Gempa Bumi:");
+        jPanel1.setBackground(new java.awt.Color(40, 40, 56));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel1.setPreferredSize(new java.awt.Dimension(0, 213));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
-        labelDeskripsi1.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        labelDeskripsi1.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi1.setText("Penjelasan");
+        jPanelTema4.setBackground(new java.awt.Color(24, 24, 24));
+        jPanelTema4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 20, 1, new java.awt.Color(40, 40, 56)));
+        jPanelTema4.setMaximumSize(new java.awt.Dimension(32767, 200));
 
-        labelDeskripsi3.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        labelDeskripsi3.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi3.setText("- Berlindung di Bawah Meja");
+        labelJudul4.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        labelJudul4.setForeground(new java.awt.Color(255, 255, 255));
+        labelJudul4.setText("Gempa Bumi:");
 
-        javax.swing.GroupLayout jPanelTema1Layout = new javax.swing.GroupLayout(jPanelTema1);
-        jPanelTema1.setLayout(jPanelTema1Layout);
-        jPanelTema1Layout.setHorizontalGroup(
-            jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTema1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelTema4Layout = new javax.swing.GroupLayout(jPanelTema4);
+        jPanelTema4.setLayout(jPanelTema4Layout);
+        jPanelTema4Layout.setHorizontalGroup(
+            jPanelTema4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTema1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(labelDeskripsi1))
-                    .addComponent(labelJudul1))
+                .addComponent(labelJudul4)
+                .addContainerGap(283, Short.MAX_VALUE))
+        );
+        jPanelTema4Layout.setVerticalGroup(
+            jPanelTema4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelJudul4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelTema1Layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(labelDeskripsi3)
-                    .addContainerGap(226, Short.MAX_VALUE)))
-        );
-        jPanelTema1Layout.setVerticalGroup(
-            jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTema1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelJudul1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelDeskripsi1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
-            .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelTema1Layout.createSequentialGroup()
-                    .addGap(76, 76, 76)
-                    .addComponent(labelDeskripsi3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(97, Short.MAX_VALUE)))
         );
 
-        jPanelTema2.setBackground(new java.awt.Color(40, 40, 56));
+        jPanel1.add(jPanelTema4);
+
+        jPanelTema5.setBackground(new java.awt.Color(24, 24, 24));
+        jPanelTema5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 20, 1, new java.awt.Color(40, 40, 56)));
+        jPanelTema5.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jPanelTema5.setMinimumSize(new java.awt.Dimension(400, 150));
+        jPanelTema5.setPreferredSize(new java.awt.Dimension(400, 150));
+
+        labelJudul5.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        labelJudul5.setForeground(new java.awt.Color(255, 255, 255));
+        labelJudul5.setText("Gempa Bumi:");
+
+        javax.swing.GroupLayout jPanelTema5Layout = new javax.swing.GroupLayout(jPanelTema5);
+        jPanelTema5.setLayout(jPanelTema5Layout);
+        jPanelTema5Layout.setHorizontalGroup(
+            jPanelTema5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelJudul5)
+                .addContainerGap(295, Short.MAX_VALUE))
+        );
+        jPanelTema5Layout.setVerticalGroup(
+            jPanelTema5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema5Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(labelJudul5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(4, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanelTema5);
+
+        jPanelTema3.setBackground(new java.awt.Color(24, 24, 24));
+        jPanelTema3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 20, 1, new java.awt.Color(40, 40, 56)));
+        jPanelTema3.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jPanelTema3.setMinimumSize(new java.awt.Dimension(400, 150));
+        jPanelTema3.setPreferredSize(new java.awt.Dimension(400, 150));
+
+        labelJudul3.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        labelJudul3.setForeground(new java.awt.Color(255, 255, 255));
+        labelJudul3.setText("Gempa Bumi:");
+
+        jPanelTema6.setBackground(new java.awt.Color(24, 24, 24));
+        jPanelTema6.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 20, 1, new java.awt.Color(40, 40, 56)));
+        jPanelTema6.setMaximumSize(new java.awt.Dimension(32767, 200));
+
+        labelJudul6.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        labelJudul6.setForeground(new java.awt.Color(255, 255, 255));
+        labelJudul6.setText("Gempa Bumi:");
+
+        javax.swing.GroupLayout jPanelTema6Layout = new javax.swing.GroupLayout(jPanelTema6);
+        jPanelTema6.setLayout(jPanelTema6Layout);
+        jPanelTema6Layout.setHorizontalGroup(
+            jPanelTema6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelJudul6)
+                .addContainerGap(283, Short.MAX_VALUE))
+        );
+        jPanelTema6Layout.setVerticalGroup(
+            jPanelTema6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelJudul6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelTema3Layout = new javax.swing.GroupLayout(jPanelTema3);
+        jPanelTema3.setLayout(jPanelTema3Layout);
+        jPanelTema3Layout.setHorizontalGroup(
+            jPanelTema3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTema3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelJudul3)
+                    .addComponent(jPanelTema6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(4, Short.MAX_VALUE))
+        );
+        jPanelTema3Layout.setVerticalGroup(
+            jPanelTema3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTema3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelTema6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelJudul3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanelTema3);
+
+        jPanelTema2.setBackground(new java.awt.Color(24, 24, 24));
+        jPanelTema2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 20, 1, new java.awt.Color(40, 40, 56)));
+        jPanelTema2.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jPanelTema2.setMinimumSize(new java.awt.Dimension(400, 150));
+        jPanelTema2.setPreferredSize(new java.awt.Dimension(400, 150));
 
         labelJudul2.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         labelJudul2.setForeground(new java.awt.Color(255, 255, 255));
         labelJudul2.setText("Gempa Bumi:");
-
-        labelDeskripsi2.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        labelDeskripsi2.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi2.setText("- Berlindung di Bawah Meja");
-
-        labelDeskripsi4.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        labelDeskripsi4.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi4.setText("Penjelasan");
 
         javax.swing.GroupLayout jPanelTema2Layout = new javax.swing.GroupLayout(jPanelTema2);
         jPanelTema2.setLayout(jPanelTema2Layout);
@@ -137,26 +213,20 @@ public class EvacuationPanel extends javax.swing.JPanel {
             jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTema2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelJudul2)
-                    .addGroup(jPanelTema2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelDeskripsi2)
-                            .addComponent(labelDeskripsi4))))
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addComponent(labelJudul2)
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         jPanelTema2Layout.setVerticalGroup(
             jPanelTema2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTema2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelJudul2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelDeskripsi4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDeskripsi2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanelTema2);
+
+        jScrollPane1.setViewportView(jPanel1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -164,19 +234,17 @@ public class EvacuationPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 109, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(97, 97, 97))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelTema1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelTema2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(121, 121, 121))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,11 +254,9 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jPanelTema1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelTema2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -200,15 +266,19 @@ public class EvacuationPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelTema1;
     private javax.swing.JPanel jPanelTema2;
-    private javax.swing.JLabel labelDeskripsi1;
-    private javax.swing.JLabel labelDeskripsi2;
-    private javax.swing.JLabel labelDeskripsi3;
-    private javax.swing.JLabel labelDeskripsi4;
-    private javax.swing.JLabel labelJudul1;
+    private javax.swing.JPanel jPanelTema3;
+    private javax.swing.JPanel jPanelTema4;
+    private javax.swing.JPanel jPanelTema5;
+    private javax.swing.JPanel jPanelTema6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelJudul2;
+    private javax.swing.JLabel labelJudul3;
+    private javax.swing.JLabel labelJudul4;
+    private javax.swing.JLabel labelJudul5;
+    private javax.swing.JLabel labelJudul6;
     // End of variables declaration//GEN-END:variables
 }

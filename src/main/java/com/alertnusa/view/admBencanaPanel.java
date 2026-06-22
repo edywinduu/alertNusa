@@ -3,37 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.alertnusa.view;
-import com.alertnusa.model.userSession;
 /**
  *
  * @author edy
  */
-public class manajemBencanaPanel extends javax.swing.JPanel {
+public class admBencanaPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form DashboardPanel
      */
-    public manajemBencanaPanel() {
+    public admBencanaPanel() {
         initComponents();
-        loginUpdate();
-        this.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                loginUpdate();
-            }
-        });
-    }
-    public void loginUpdate() {
-        // Kita ambil objek User yang sedang login dari model milikmu
-        com.alertnusa.model.User userNow = com.alertnusa.model.userSession.getCurrentUser();
-
-        if (userNow != null) {
-            welcomeLabel.setText("Welcome, " + userNow.getUsername());
-            loginButton.setText("Logout");
-        } else {
-            welcomeLabel.setText("Welcome, Guest");
-            loginButton.setText("Login");
-        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -524,16 +504,6 @@ public class manajemBencanaPanel extends javax.swing.JPanel {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
 
-        java.util.List<com.alertnusa.model.Bencana> list = com.alertnusa.model.BencanaRepository.getAllBencana();
-
-        com.alertnusa.model.Bencana dataGempa = list.get(0);
-
-        javax.swing.JOptionPane.showMessageDialog(
-            this,
-            dataGempa.getDeskripsiPanjang(),
-            "Detail Informasi: " + dataGempa.getNama(),
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
