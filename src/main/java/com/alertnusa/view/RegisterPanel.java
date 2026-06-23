@@ -236,70 +236,40 @@ public class RegisterPanel extends javax.swing.JPanel {
         String passIn = Password_Field.getText();
         String confirmPassIn = Confirm_Password_Field.getText(); 
 
-        // 2. Validasi Input Kosong
         if (emailIn.isEmpty() || userIn.isEmpty() || passIn.isEmpty()) {
-            alertLabel.setText("Mohon isi semua kolom!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
+            javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom wajib diisi!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 3. Validasi Password
+        // 2. Validasi Kesamaan Password
         if (!passIn.equals(confirmPassIn)) {
-            alertLabel.setText("Konfirmasi password salah!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
-            return;
-        }
-        if (passIn.length() < 8) {
-            alertLabel.setText("Password minimal 8 karakter!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
+            javax.swing.JOptionPane.showMessageDialog(this, "Konfirmasi password tidak cocok!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 2. Cek Angka (Rekursif)
-        if (!passwordValidator.checker(passIn, 0, 1)) {
-            alertLabel.setText("Password harus mengandung minimal satu angka!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
-            return;
-        }
-
-        // 3. Cek Huruf Besar (Rekursif)
-        if (!passwordValidator.checker(passIn, 0, 2)) {
-            alertLabel.setText("Password harus mengandung minimal satu huruf kapital!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
-            return;
-        }
-
-        // 4. Cek Simbol (Rekursif)
-        if (!passwordValidator.checker(passIn, 0, 3)) {
-            alertLabel.setText("Password harus mengandung minimal satu simbol (!@#$ dll)!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
-            return;
-        }
-
-        // 4. Gunakan Method Overloading & Encapsulation
-        // Kita cek dulu apakah username tersedia menggunakan HashMap yang ada di UserSession
+        // 3. Cek Apakah Username Sudah Terpakai di MySQL
         if (userSession.isUsernameTaken(userIn)) {
-            alertLabel.setText("Username sudah dipakai!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
-        } else {
-            // Memanggil Method Overload: addUser(email, user, pass)
-            userSession.addUser(emailIn, userIn, passIn);
+            javax.swing.JOptionPane.showMessageDialog(this, "Username sudah terdaftar! Gunakan nama lain.", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Register Sukses!");
+        // 4. Masukkan ke Database MySQL via userSession
+        try {
+            userSession.addUser(emailIn, userIn, passIn);
+            javax.swing.JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            // 5. Otomatis pindah ke halaman login atau bersihkan textfield
+            Email_Field.setText("");
+            Username_Field.setText("");
+            Password_Field.setText("");
+            Confirm_Password_Field.setText("");
+            java.awt.Container parent = this.getParent(); 
+
+            java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
+            cl.show(parent, "login_screen");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal registrasi: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }    // TODO add your handling code here:
     }//GEN-LAST:event_jButton9MouseClicked
 

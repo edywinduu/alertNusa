@@ -19,20 +19,36 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
-    
-        mainContent.add(new DashboardPanel(), "dashboard_screen");
-        mainContent.add(new PreparationPanel(), "preparation_screen");
-        mainContent.add(new EvacuationPanel(), "evacuation_screen");
-        mainContent.add(new SOSPanel(), "sos_screen");
-        mainContent.add(new LoginPanel(), "login_screen");
-        mainContent.add(new RegisterPanel(), "register_screen");
-        mainContent.add(new ForgotPasswordPanel(), "fgpassword_screen");
+        
+        int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
+                             ? com.alertnusa.model.userSession.getCurrentUser().getId() 
+                             : 0; // Jika Guest atau tidak login, set ke 0
 
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
-        cl.show(mainContent, "dashboard_screen");
+        // 2. Buat objek panel KESIANPAN tunggal
+        PreparationPanel prepPanel = new PreparationPanel();
 
-        mainContent.revalidate();
-        mainContent.repaint();
+        // 3. Daftarkan semua screen ke mainContent (Gunakan variabel 'prepPanel', JANGAN 'new' lagi!)
+        mainPanel.add(new DashboardPanel(), "dashboard_screen");
+        mainPanel.add(prepPanel, "preparation_screen"); // <-- Menggunakan objek yang sama!
+        mainPanel.add(new EvacuationPanel(), "evacuation_screen"); // sesuaikan penamaan lamamu
+        mainPanel.add(new SOSPanel(), "sos_screen");
+        mainPanel.add(new LoginPanel(), "login_screen");
+        mainPanel.add(new RegisterPanel(), "register_screen");
+        mainPanel.add(new ForgotPasswordPanel(), "fgpassword_screen");
+        mainPanel.add(new AdminPanel(), "adminPanel_screen");
+
+        // 4. Perintahkan controller untuk memuat data berdasarkan user yang sedang aktif
+        if (prepPanel.getPrepController() != null) {
+            prepPanel.getPrepController().loadPreparationData(loggedInUserId);
+        }
+
+        // Tampilkan halaman utama dashboard terlebih dahulu
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, "dashboard_screen");
+
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        
     }
 
     /**
@@ -49,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         homeV1 = new javax.swing.JLabel();
         homeV2 = new javax.swing.JLabel();
         homeV3 = new javax.swing.JLabel();
-        mainContent = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
         dashboardPanel1 = new com.alertnusa.view.DashboardPanel();
         evacuationPanel1 = new com.alertnusa.view.EvacuationPanel();
         preparationPanel1 = new com.alertnusa.view.PreparationPanel();
@@ -57,6 +73,8 @@ public class MainFrame extends javax.swing.JFrame {
         loginPanel1 = new com.alertnusa.view.LoginPanel();
         registerPanel1 = new com.alertnusa.view.RegisterPanel();
         forgotPasswordPanel1 = new com.alertnusa.view.ForgotPasswordPanel();
+        adminPanel = new com.alertnusa.view.AdminPanel();
+        admUserPanel1 = new com.alertnusa.view.admUserPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -130,38 +148,60 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(bar, java.awt.BorderLayout.SOUTH);
 
-        mainContent.setLayout(new java.awt.CardLayout());
-        mainContent.add(dashboardPanel1, "dashboard_screen");
-        mainContent.add(evacuationPanel1, "evacuation_screen");
-        mainContent.add(preparationPanel1, "preparation_screen");
-        mainContent.add(sOSPanel1, "sos_screen");
-        mainContent.add(loginPanel1, "login_screen");
-        mainContent.add(registerPanel1, "register_screen");
-        mainContent.add(forgotPasswordPanel1, "fgpassword_screen");
+        mainPanel.setLayout(new java.awt.CardLayout());
+        mainPanel.add(dashboardPanel1, "dashboard_screen");
+        mainPanel.add(evacuationPanel1, "evacuation_screen");
+        mainPanel.add(preparationPanel1, "preparation_screen");
+        mainPanel.add(sOSPanel1, "sos_screen");
+        mainPanel.add(loginPanel1, "login_screen");
+        mainPanel.add(registerPanel1, "register_screen");
+        mainPanel.add(forgotPasswordPanel1, "fgpassword_screen");
+        mainPanel.add(adminPanel, "adminPanel_screen");
+        mainPanel.add(admUserPanel1, "card10");
 
-        getContentPane().add(mainContent, java.awt.BorderLayout.CENTER);
+        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeV1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV1MouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
-        cl.show(mainContent, "preparation_screen");    // TODO add your handling code here:
+        int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
+                            ? com.alertnusa.model.userSession.getCurrentUser().getId() 
+                            : 0; 
+
+       // Cari panel yang sudah tertanam di CardLayout tanpa menumpuknya dari awal
+       for (java.awt.Component comp : mainPanel.getComponents()) {
+           if (comp instanceof PreparationPanel) {
+               PreparationPanel prepPanel = (PreparationPanel) comp;
+               if (prepPanel.getPrepController() != null) {
+                   // Paksa sedot data teranyar milik user aktif dari database
+                   prepPanel.getPrepController().loadPreparationData(loggedInUserId);
+               }
+               break;
+           }
+       }
+
+       java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+       cl.show(mainPanel, "preparation_screen");
+        
+        // 4. Render ulang container utama
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }//GEN-LAST:event_homeV1MouseClicked
 
     private void homeV2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV2MouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
-        cl.show(mainContent, "evacuation_screen");    // TODO add your handling code here:
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, "evacuation_screen");    // TODO add your handling code here:
     }//GEN-LAST:event_homeV2MouseClicked
 
     private void homeV3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV3MouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
-        cl.show(mainContent, "sos_screen");
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, "sos_screen");
     }//GEN-LAST:event_homeV3MouseClicked
 
     private void homeVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeVMouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainContent.getLayout();
-        cl.show(mainContent, "dashboard_screen");    // TODO add your handling code here:
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, "dashboard_screen");    // TODO add your handling code here:
     }//GEN-LAST:event_homeVMouseClicked
 
     /**
@@ -188,8 +228,17 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
+    public void panggilLayar(String namaCard) {
+        // GANTI 'mainPanel' dengan nama variabel JPanel pembungkus CardLayout milikmu yang dicatat di Langkah 1 tadi!
+        if (mainPanel.getLayout() instanceof java.awt.CardLayout) {
+            java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+            cl.show(mainPanel, namaCard);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.alertnusa.view.admUserPanel admUserPanel1;
+    private com.alertnusa.view.AdminPanel adminPanel;
     private javax.swing.JPanel bar;
     private com.alertnusa.view.DashboardPanel dashboardPanel1;
     private com.alertnusa.view.EvacuationPanel evacuationPanel1;
@@ -199,7 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel homeV2;
     private javax.swing.JLabel homeV3;
     private com.alertnusa.view.LoginPanel loginPanel1;
-    private javax.swing.JPanel mainContent;
+    private javax.swing.JPanel mainPanel;
     private com.alertnusa.view.PreparationPanel preparationPanel1;
     private com.alertnusa.view.RegisterPanel registerPanel1;
     private com.alertnusa.view.SOSPanel sOSPanel1;

@@ -9,8 +9,8 @@ package com.alertnusa.model;
  * @author edy
  */
 public class Member extends User{
-    public Member(String email, String username, String password) {
-        super(email, username, password);
+    public Member(int id, String email, String username, String password) {
+        super(id, email, username, password); // <-- Oper id ke super constructor
     }
 
     @Override

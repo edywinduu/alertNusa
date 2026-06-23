@@ -16,24 +16,95 @@ public class DashboardPanel extends javax.swing.JPanel {
     public DashboardPanel() {
         initComponents();
         loginUpdate();
+        initKatalogBencana();
+        updateProgressBar();
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 loginUpdate();
+                initKatalogBencana();
+                updateProgressBar();
             }
         });
     }
-    public void loginUpdate() {
-        // Kita ambil objek User yang sedang login dari model milikmu
-        com.alertnusa.model.User userNow = com.alertnusa.model.userSession.getCurrentUser();
+    
+    public void updateProgressBar() {
+        try {
+            // 1. Ambil ID User yang sedang aktif dari Session
+            int currentUserId = com.alertnusa.model.userSession.getCurrentUser().getId();
 
-        if (userNow != null) {
-            welcomeLabel.setText("Welcome, " + userNow.getUsername());
-            loginButton.setText("Logout");
-        } else {
-            welcomeLabel.setText("Welcome, Guest");
-            loginButton.setText("Login");
+            // 2. Ambil nilai persentase dari repository
+            com.alertnusa.model.PreparationRepository repo = new com.alertnusa.model.PreparationRepository();
+            int persentase = repo.getPreparationPercentage(currentUserId);
+
+            // 3. Set nilai ke komponen JProgressBar bawaan NetBeans kamu
+            jProgressBar1.setValue(persentase);
+            
+            jLabel3.setText(persentase + "%");
+
+            // (Opsional) Jika ingin memunculkan teks persentase seperti "45%" di dalam bar:
+            jProgressBar1.setStringPainted(true); 
+
+        } catch (Exception e) {
+            // Jaga-jaga jika session kosong/null saat dipanggil awal
+            jProgressBar1.setValue(0);
         }
+    }
+    
+    public void loginUpdate() {
+        try {
+            com.alertnusa.model.User currentUser = com.alertnusa.model.userSession.getCurrentUser();
+            
+            if (currentUser != null) {
+                welcomeLabel.setText("Selamat Datang, " + currentUser.getUsername() + "!");
+                String role = currentUser.getRoleName();
+                
+                // Ambil MainFrame selaku induk jendelanya
+                java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
+                
+                if (ancestor instanceof MainFrame) {
+                    MainFrame mf = (MainFrame) ancestor;
+                    
+                    if ("admin".equalsIgnoreCase(role)) {
+                        mf.panggilLayar("adminPanel_screen"); 
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error check role dashboard: " + e.getMessage());
+        }
+    }
+    public void initKatalogBencana() {
+        com.alertnusa.model.BencanaRepository repo = new com.alertnusa.model.BencanaRepository();
+        java.util.List<com.alertnusa.model.Bencana> disasters = repo.getAllDisasters();
+        
+        katalogPanel.removeAll();
+        katalogPanel.setLayout(new javax.swing.BoxLayout(katalogPanel, javax.swing.BoxLayout.Y_AXIS));
+        
+        java.awt.Dimension ukuranTetap = new java.awt.Dimension(360, 140);
+        
+        for (com.alertnusa.model.Bencana b : disasters) {
+            DisasterCardPanel card = new DisasterCardPanel();
+            
+            card.getLblTitle().setText(b.getDisasterName());
+            card.getLblDesc().setText(b.getDescription());
+            
+            // Kunci ukuran kartu agar tidak melar dipaksa BoxLayout
+            card.setPreferredSize(ukuranTetap);
+            card.setMaximumSize(ukuranTetap);
+            card.setMinimumSize(ukuranTetap);
+            
+            // Tengahkan posisi kartu secara horizontal
+            card.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            
+            katalogPanel.add(card);
+            
+            // Jarak antar kartu ke bawah
+            katalogPanel.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+        }
+        
+        katalogPanel.revalidate();
+        katalogPanel.repaint();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,23 +128,8 @@ public class DashboardPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        katalogPanel = new javax.swing.JPanel();
         loginButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
@@ -196,187 +252,13 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Katalog Bencana");
 
-        jPanel6.setBackground(new java.awt.Color(40, 40, 56));
-        jPanel6.setLayout(new java.awt.GridLayout(5, 1, 20, 20));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 450));
 
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel5.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Gempa Bumi");
-
-        jLabel6.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Desc...");
-
-        jButton9.setBackground(new java.awt.Color(0, 102, 102));
-        jButton9.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Baca Selengkapnya");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addGap(14, 14, 14))
-        );
-
-        jPanel6.add(jPanel7);
-
-        jPanel8.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel7.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Gempa Bumi");
-
-        jLabel8.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Desc...");
-
-        jButton10.setBackground(new java.awt.Color(0, 102, 102));
-        jButton10.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Baca Selengkapnya");
-        jButton10.addActionListener(this::jButton10ActionPerformed);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton10)
-                .addContainerGap())
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton10)
-                .addGap(14, 14, 14))
-        );
-
-        jPanel6.add(jPanel8);
-
-        jPanel9.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel9.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Gempa Bumi");
-
-        jLabel10.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Desc...");
-
-        jButton11.setBackground(new java.awt.Color(0, 102, 102));
-        jButton11.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Baca Selengkapnya");
-        jButton11.addActionListener(this::jButton11ActionPerformed);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11)
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11)
-                .addGap(14, 14, 14))
-        );
-
-        jPanel6.add(jPanel9);
-
-        jPanel10.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel11.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Gempa Bumi");
-
-        jLabel12.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Desc...");
-
-        jButton12.setBackground(new java.awt.Color(0, 102, 102));
-        jButton12.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Baca Selengkapnya");
-        jButton12.addActionListener(this::jButton12ActionPerformed);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton12)
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton12)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        jPanel6.add(jPanel10);
+        katalogPanel.setBackground(new java.awt.Color(40, 40, 56));
+        katalogPanel.setLayout(new javax.swing.BoxLayout(katalogPanel, javax.swing.BoxLayout.LINE_AXIS));
+        jScrollPane1.setViewportView(katalogPanel);
 
         loginButton.setBackground(new java.awt.Color(255, 0, 0));
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -396,14 +278,13 @@ public class DashboardPanel extends javax.swing.JPanel {
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel4)
+                        .addGap(85, 85, 85))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)
-                                .addGap(85, 85, 85))
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -419,6 +300,10 @@ public class DashboardPanel extends javax.swing.JPanel {
                         .addGap(75, 75, 75)
                         .addComponent(loginButton)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,52 +323,26 @@ public class DashboardPanel extends javax.swing.JPanel {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 822, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-        java.util.List<com.alertnusa.model.Bencana> list = com.alertnusa.model.BencanaRepository.getAllBencana();
-
-        com.alertnusa.model.Bencana dataGempa = list.get(0);
-
-        javax.swing.JOptionPane.showMessageDialog(
-            this,
-            dataGempa.getDeskripsiPanjang(),
-            "Detail Informasi: " + dataGempa.getNama(),
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
@@ -491,55 +350,69 @@ public class DashboardPanel extends javax.swing.JPanel {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         if (userSession.getCurrentUser() == null) {
+        // Mengambil kontainer induk (mainContent)
+        java.awt.Container parent = this.getParent(); 
 
-            // Mengambil kontainer induk (mainContent)
-            java.awt.Container parent = this.getParent(); 
+        // Memastikan induknya memakai CardLayout, lalu pindah layar
+        if (parent != null && parent.getLayout() instanceof java.awt.CardLayout) {
+            java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
+            cl.show(parent, "login_screen"); 
+        }
 
-            // Memastikan induknya memakai CardLayout, lalu pindah layar
-            if (parent != null && parent.getLayout() instanceof java.awt.CardLayout) {
-                java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
-                // PENTING: Ganti "login_screen" dengan Card Name panel login milikmu
-                cl.show(parent, "login_screen"); 
+    } else {
+        userSession.logout();
+
+        java.awt.Container parentFrame = javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (parentFrame instanceof MainFrame) {
+            MainFrame mainFrame = (MainFrame) parentFrame;
+
+            // Loop semua komponen yang ada di dalam mainContent milik MainFrame
+            for (java.awt.Component compFrame : mainFrame.getComponents()) {
+                // Cari panel kontainer utama, atau langsung cari PreparationPanel-nya di dalam layer mana saja
+                if (compFrame instanceof java.awt.Container) {
+                    java.awt.Container ct = (java.awt.Container) compFrame;
+                    for (java.awt.Component child : ct.getComponents()) {
+                        if (child instanceof PreparationPanel) {
+                            PreparationPanel prepPanel = (PreparationPanel) child;
+                            if (prepPanel.getPrepController() != null) {
+                                prepPanel.getPrepController().loadPreparationData(0);
+                            }
+                            break;
+                        }
+                    }
+                }
             }
+        } // <-- Kurung kurawal penutup MainFrame ditaruh tegas di sini
 
-        } else {
-            userSession.logout();
-            loginUpdate(); // Segarkan tulisan menjadi Guest
-            javax.swing.JOptionPane.showMessageDialog(this, "Anda telah berhasil Logout.");
-        }    // TODO add your handling code here:
+        // 3. Segarkan UI tulisan/status tombol logout menjadi Login kembali
+        loginUpdate(); // Segarkan tulisan menjadi Guest
+        java.awt.Container parent = this.getParent();
+        if (parent != null && parent.getLayout() instanceof java.awt.CardLayout) {
+            java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
+            cl.show(parent, "login_screen");
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Anda telah berhasil Logout.", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    } // <-- Penutup akhir blok else   // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel katalogPanel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables

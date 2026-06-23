@@ -9,14 +9,56 @@ package com.alertnusa.view;
  * @author edy
  */
 public class PreparationPanel extends javax.swing.JPanel {
-
+    private com.alertnusa.controller.PreparationController prepController;
     /**
      * Creates new form PreparationPanel
      */
     public PreparationPanel() {
         initComponents();
+        jPanel3.removeAll();
+        this.prepController = new com.alertnusa.controller.PreparationController(this);
+        
+        try {
+            this.prepController.loadPreparationData(1);
+        } catch (Exception e) {
+            System.err.println("Error pemicuan mandiri panel: " + e.getMessage());
+        }
     }
-
+    
+    public com.alertnusa.controller.PreparationController getPrepController() {
+        return this.prepController;
+    }
+    
+    public void initPreparationChecklist(java.util.List<com.alertnusa.model.PreparationItem> itemList, java.util.List<Integer> checkedIds) {
+        jPanel3.removeAll();
+        
+        for (com.alertnusa.model.PreparationItem item : itemList) {
+            javax.swing.JCheckBox checkBox = new javax.swing.JCheckBox(item.getTitle());
+            
+            checkBox.setForeground(new java.awt.Color(255, 255, 255));
+            checkBox.setFont(new java.awt.Font("Poppins", 0, 14)); 
+            checkBox.setOpaque(false);
+            
+            // Simpan ID asli item database ke komponen JCheckBox
+            checkBox.putClientProperty("preparationId", item.getId());
+            
+            // ============================================================
+            // KUNCI UTAMA: Cek apakah ID item ini ada di dalam list checkedIds MySQL
+            // ============================================================
+            System.out.println("Memeriksa Item ID: " + item.getId() + " | List Centang dari DB: " + checkedIds);
+            
+            if (checkedIds != null && checkedIds.contains(item.getId())) {
+                checkBox.setSelected(true); 
+                System.out.println("-> BERHASIL DICENTANG: " + item.getTitle()); // Taruh ini juga
+            }
+            // ============================================================
+            
+            checkBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 10, 0));
+            jPanel3.add(checkBox);
+        }
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,16 +73,8 @@ public class PreparationPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -55,6 +89,11 @@ public class PreparationPanel extends javax.swing.JPanel {
         jButton7.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Simpan Perubahan");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Poppins ExtraBold", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,101 +116,14 @@ public class PreparationPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("List Kesiapan");
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 300));
+
         jPanel3.setBackground(new java.awt.Color(40, 40, 56));
-
-        jLabel3.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Dokumen Penting:");
-
-        jCheckBox1.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Kartu Tanda Pengenal (KTP)");
-        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
-
-        jCheckBox2.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setText("Ijazah");
-        jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
-
-        jCheckBox3.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox3.setText("Surat Tanah");
-        jCheckBox3.addActionListener(this::jCheckBox3ActionPerformed);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBackground(new java.awt.Color(40, 40, 56));
-
-        jLabel4.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Sumber Daya:");
-
-        jCheckBox4.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox4.setText("Obat-obatan");
-        jCheckBox4.addActionListener(this::jCheckBox4ActionPerformed);
-
-        jCheckBox5.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox5.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox5.setText("Air Minum");
-        jCheckBox5.addActionListener(this::jCheckBox5ActionPerformed);
-
-        jCheckBox6.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        jCheckBox6.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox6.setText("Makanan Darurat");
-        jCheckBox6.addActionListener(this::jCheckBox6ActionPerformed);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox6)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(jPanel3);
+        jPanel3.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -190,11 +142,10 @@ public class PreparationPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton7)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 261, Short.MAX_VALUE)
+                        .addComponent(jButton7))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -206,10 +157,8 @@ public class PreparationPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
         );
@@ -217,46 +166,53 @@ public class PreparationPanel extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        if (!com.alertnusa.model.userSession.isLoggedIn()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Anda masuk sebagai Guest. Silakan login terlebih dahulu untuk menyimpan perubahan!", 
+                "Akses Ditolak", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Menghentikan proses eksekusi, tidak terjadi apa-apa di database
+        }
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+        // 2. Jika lolos, berarti user terautentikasi (Admin / Member seperti Edy)
+        int loggedInUserId = com.alertnusa.model.userSession.getCurrentUser().getId();
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+        java.util.List<Integer> checkedIds = new java.util.ArrayList<>();
 
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
+        // 3. Ambil semua id checkbox yang sedang dicentang
+        for (java.awt.Component comp : jPanel3.getComponents()) {
+            if (comp instanceof javax.swing.JCheckBox) {
+                javax.swing.JCheckBox cb = (javax.swing.JCheckBox) comp;
+                if (cb.isSelected()) {
+                    int prepId = (int) cb.getClientProperty("preparationId");
+                    checkedIds.add(prepId);
+                }
+            }
+        }
 
-    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox5ActionPerformed
+        // 4. Eksekusi simpan permanen ke MySQL via Controller
+        if (this.prepController != null) {
+            this.prepController.saveChecklist(loggedInUserId, checkedIds);
 
-    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox6ActionPerformed
+            // Cetak log dinamis ke konsol NetBeans untuk debugging
+            System.out.println("Berhasil memperbarui data checklist untuk User ID: " + loggedInUserId);
+
+            // Sinkronisasi ulang data terbaru dari database ke UI
+            this.prepController.loadPreparationData(loggedInUserId);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Perubahan checklist berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton7MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton7;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

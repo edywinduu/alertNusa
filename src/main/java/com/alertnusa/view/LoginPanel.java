@@ -84,6 +84,8 @@ public class LoginPanel extends javax.swing.JPanel {
         welcomeLabel2.setForeground(new java.awt.Color(255, 255, 255));
         welcomeLabel2.setText("Username/Email");
 
+        User_Field.setText("admin");
+
         welcomeLabel3.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         welcomeLabel3.setForeground(new java.awt.Color(255, 255, 255));
         welcomeLabel3.setText("Password");
@@ -123,6 +125,8 @@ public class LoginPanel extends javax.swing.JPanel {
                 welcomeLabel5MouseEntered(evt);
             }
         });
+
+        Password_Field.setText("admin123");
 
         welcomeLabel6.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
         welcomeLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -228,28 +232,30 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
-        String userIn = User_Field.getText().trim();
-        String passIn = Password_Field.getText();
+        
+        String identifier = User_Field.getText().trim();
+        String password = new String(Password_Field.getPassword()).trim();
 
-        if (userSession.login(userIn, passIn)) {
+        if (identifier.isEmpty() || password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username/Email dan Password tidak boleh kosong!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            // Menampilkan pesan di GUI menggunakan email (via Getter)
-            java.awt.Container parent = this.getParent(); 
+        boolean isLoginSuccess = com.alertnusa.model.userSession.login(identifier, password);
 
-            // Memastikan induknya memakai CardLayout, lalu pindah layar
-            if (parent != null && parent.getLayout() instanceof java.awt.CardLayout) {
-                java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
-                cl.show(parent, "dashboard_screen");
-            } 
-            // Kurung kurawal tutup untuk pengecekan CardLayout ada di sini
+        if (isLoginSuccess) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selamat Datang, " + com.alertnusa.model.userSession.getCurrentUser().getUsername() + "!", "Login Berhasil", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } else { 
-            // Else ini SEKARANG BENAR, menempel pada kegagalan userSession.login()
+            java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (ancestor instanceof javax.swing.JFrame) {
+                ancestor.dispose(); 
+            }
 
-            alertLabel.setText("Username atau Password Salah!");
-            javax.swing.Timer timer = new javax.swing.Timer(2000, e -> alertLabel.setText(""));
-            timer.setRepeats(false);
-            timer.start();
+            new MainFrame().setVisible(true);
+            
+
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username/Email atau Password salah!", "Login Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton9MouseClicked
 

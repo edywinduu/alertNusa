@@ -3,78 +3,132 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.alertnusa.model;
+import com.alertnusa.util.DatabaseConnection;
+import java.sql.*;
 
 /**
  *
  * @author edy
  */
-import java.util.HashMap;
 public class userSession {
-    private static HashMap<String, User> userDatabase = new HashMap<>();
     private static User currentUser;
     
+    // Cek apakah username sudah terpakai di database MySQL
     public static boolean isUsernameTaken(String username) {
-        return userDatabase.containsKey(username);
+        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Gagal cek username: " + e.getMessage());
+        }
+        return false;
     }
 
-    static {
-        Admin adminUtama = new Admin("admin@gmail.com", "admin", "admin123");
-        userDatabase.put(adminUtama.getUsername(), adminUtama);
-        
-        Member custDefault = new Member("edy@gmail.com", "edy", "edy");
-        userDatabase.put(custDefault.getUsername(), custDefault);
-    }
-    
-    // --- METHOD OVERLOADING ---
+    // --- METHOD OVERLOADING UNTUK REGISTER (INSERT KE DATABASE) ---
 
     // Overload 1: Register standar (Email, Username, Password)
     public static void addUser(String email, String username, String password) {
-        User newUser = new Member(email, username, password);
-        userDatabase.put(username, newUser);
+        String query = "INSERT INTO users (email, username, password, role) VALUES (?, ?, ?, 'member')";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setString(1, email);
+            ps.setString(2, username);
+            ps.setString(3, password);
+            ps.executeUpdate();
+            System.out.println("Berhasil menambahkan member baru ke DB.");
+        } catch (SQLException e) {
+            System.err.println("Gagal register user (Overload 1): " + e.getMessage());
+        }
     }
 
-    // Overload 2: Register tanpa email (misal untuk Quick Signup)
+    // Overload 2: Register tanpa email (Quick Signup)
     public static void addUser(String username, String password) {
         String emailDefault = username + "@example.com";
-        User newUser = new User(emailDefault, username, password);
-        userDatabase.put(username, newUser);
+        addUser(emailDefault, username, password); // Re-use Overload 1 biar tidak duplikasi query
     }
 
     // Overload 3: Register menggunakan objek User langsung
     public static void addUser(User newUser) {
-        if (newUser != null) {
-            userDatabase.put(newUser.getUsername(), newUser);
+        if (newUser == null) return;
+        
+        String role = (newUser instanceof Admin) ? "admin" : "member";
+        String query = "INSERT INTO users (email, username, password, role) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setString(1, newUser.getEmail());
+            ps.setString(2, newUser.getUsername());
+            ps.setString(3, newUser.getPassword());
+            ps.setString(4, role);
+            ps.executeUpdate();
+            System.out.println("Berhasil menambahkan objek user ke DB.");
+        } catch (SQLException e) {
+            System.err.println("Gagal register user (Overload 3): " + e.getMessage());
         }
     }
 
+    // Login dinamis: Membaca tabel users berdasarkan Username atau Email, cocokkan Password
     public static boolean login(String identifier, String password) {
-        if (userDatabase.containsKey(identifier)) {
-            User user = userDatabase.get(identifier);
-            if (user.getPassword().equals(password)) {
-                currentUser = user;
-                return true;
-            }
-        } else {
-            for (User user : userDatabase.values()) {
-                if (user.getEmail().equals(identifier) && user.getPassword().equals(password)) {
-                    currentUser = user;
+        String query = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setString(1, identifier);
+            ps.setString(2, identifier);
+            ps.setString(3, password);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    
+                    String username = rs.getString("username");
+                    String role = rs.getString("role");
+                    
+                    // Polimorfisme instansiasi objek session
+                    if ("admin".equalsIgnoreCase(role)) {
+                        currentUser = new Admin(id, email, username, password);
+                    } else {
+                        currentUser = new Member(id, email, username, password);
+                    }
+                    System.out.println("Login berhasil! Sesi aktif untuk: " + username);
                     return true;
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Gagal melakukan proses login: " + e.getMessage());
         }
         return false;
     }
     
+    public static void loginAsGuest() {
+            currentUser = null; // Menandakan bahwa yang aktif adalah Guest
+            System.out.println("Masuk sebagai Guest (Sesi User Kosong).");
+        }
+    
+    // Reset password langsung update baris di database MySQL
     public static boolean resetPassword(String username, String email, String newPassword) {
-        if (userDatabase.containsKey(username)) {
-            User akun = userDatabase.get(username);
+        String query = "UPDATE users SET password = ? WHERE username = ? AND email = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
             
-            // Verifikasi apakah email cocok (Encapsulation: getEmail)
-            if (akun.getEmail().equals(email)) {
-                // Update password (Encapsulation: setPassword)
-                akun.setPassword(newPassword);
-                return true;
-            }
+            ps.setString(1, newPassword);
+            ps.setString(2, username);
+            ps.setString(3, email);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // Mengembalikan true jika baris password berhasil di-update
+            
+        } catch (SQLException e) {
+            System.err.println("Gagal mereset password di DB: " + e.getMessage());
         }
         return false;
     }
@@ -83,13 +137,12 @@ public class userSession {
         return currentUser;
     }
     
-    // Method untuk mengecek apakah ada user yang sedang login
     public static boolean isLoggedIn() {
         return currentUser != null;
     }
     
-    // Method untuk menghapus sesi user saat ini (Logout)
     public static void logout() {
         currentUser = null;
+        System.out.println("Sesi user telah dihapus (Logout).");
     }
 }
