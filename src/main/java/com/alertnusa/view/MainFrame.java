@@ -35,7 +35,6 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(new LoginPanel(), "login_screen");
         mainPanel.add(new RegisterPanel(), "register_screen");
         mainPanel.add(new ForgotPasswordPanel(), "fgpassword_screen");
-        mainPanel.add(new AdminPanel(), "adminPanel_screen");
 
         // 4. Perintahkan controller untuk memuat data berdasarkan user yang sedang aktif
         if (prepPanel.getPrepController() != null) {
@@ -73,8 +72,6 @@ public class MainFrame extends javax.swing.JFrame {
         loginPanel1 = new com.alertnusa.view.LoginPanel();
         registerPanel1 = new com.alertnusa.view.RegisterPanel();
         forgotPasswordPanel1 = new com.alertnusa.view.ForgotPasswordPanel();
-        adminPanel = new com.alertnusa.view.AdminPanel();
-        admUserPanel1 = new com.alertnusa.view.admUserPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -156,8 +153,6 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(loginPanel1, "login_screen");
         mainPanel.add(registerPanel1, "register_screen");
         mainPanel.add(forgotPasswordPanel1, "fgpassword_screen");
-        mainPanel.add(adminPanel, "adminPanel_screen");
-        mainPanel.add(admUserPanel1, "card10");
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -237,8 +232,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.alertnusa.view.admUserPanel admUserPanel1;
-    private com.alertnusa.view.AdminPanel adminPanel;
     private javax.swing.JPanel bar;
     private com.alertnusa.view.DashboardPanel dashboardPanel1;
     private com.alertnusa.view.EvacuationPanel evacuationPanel1;

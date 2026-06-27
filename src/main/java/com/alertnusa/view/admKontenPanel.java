@@ -61,6 +61,8 @@ public class admKontenPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(420, 720));
         setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
         jPanel2.setMaximumSize(new java.awt.Dimension(420, 720));
         jPanel2.setMinimumSize(new java.awt.Dimension(420, 720));

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.alertnusa.view;
-import com.alertnusa.model.userSession;
 /**
  *
  * @author edy
@@ -251,7 +250,7 @@ public class LoginPanel extends javax.swing.JPanel {
                 ancestor.dispose(); 
             }
 
-            new MainFrame().setVisible(true);
+            new AdminFrame().setVisible(true);
             
 
         } else {

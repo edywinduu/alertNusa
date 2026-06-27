@@ -57,17 +57,12 @@ public class DashboardPanel extends javax.swing.JPanel {
             
             if (currentUser != null) {
                 welcomeLabel.setText("Selamat Datang, " + currentUser.getUsername() + "!");
-                String role = currentUser.getRoleName();
                 
                 // Ambil MainFrame selaku induk jendelanya
                 java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
                 
                 if (ancestor instanceof MainFrame) {
                     MainFrame mf = (MainFrame) ancestor;
-                    
-                    if ("admin".equalsIgnoreCase(role)) {
-                        mf.panggilLayar("adminPanel_screen"); 
-                    }
                 }
             }
         } catch (Exception e) {
