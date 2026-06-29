@@ -57,13 +57,15 @@ public class userSession {
 
     // Overload 3: Register menggunakan objek User langsung
     public static void addUser(User newUser) {
-        if (newUser == null) return;
+        if (newUser == null) {
+            return;
+        }
         
         String role = (newUser instanceof Admin) ? "admin" : "member";
-        String query = "INSERT INTO users (email, username, password, role) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            
+        // TAMBAHKAN KOLOM phone_number DAN domicile DI QUERY AGAR TIDAK EROR NOT NULL
+        String query = "INSERT INTO users (email, username, password, role, phone_number, domicile) VALUES (?, ?, ?, ?, '', '')";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
             ps.setString(1, newUser.getEmail());
             ps.setString(2, newUser.getUsername());
             ps.setString(3, newUser.getPassword());
@@ -95,9 +97,11 @@ public class userSession {
                     
                     // Polimorfisme instansiasi objek session
                     if ("admin".equalsIgnoreCase(role)) {
-                        currentUser = new Admin(id, email, username, password);
+                        // FIX: Tambahkan parameter 'role' di ujung constructor
+                        currentUser = new Admin(id, email, username, password, role);
                     } else {
-                        currentUser = new Member(id, email, username, password);
+                        // FIX: Tambahkan parameter 'role' di ujung constructor
+                        currentUser = new Member(id, email, username, password, role);
                     }
                     System.out.println("Login berhasil! Sesi aktif untuk: " + username);
                     return true;

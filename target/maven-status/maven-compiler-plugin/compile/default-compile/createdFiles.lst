@@ -4,12 +4,14 @@ com\alertnusa\view\RegisterPanel$1.class
 com\alertnusa\view\PreparationPanel$1.class
 com\alertnusa\view\LoginPanel$3.class
 com\alertnusa\view\ForgotPasswordPanel$1.class
+com\alertnusa\view\admUserPanel$3.class
 com\alertnusa\view\RegisterPanel.class
 com\alertnusa\view\SOSPanel.class
 com\alertnusa\view\MainFrame$1.class
 com\alertnusa\model\PreparationItem.class
 com\alertnusa\view\DashboardPanel.class
 com\alertnusa\view\LoginPanel.class
+com\alertnusa\view\AdminPanel$2.class
 com\alertnusa\model\userSession.class
 com\alertnusa\view\admBencanaPanel.class
 com\alertnusa\view\LoginPanel$2.class
@@ -29,7 +31,9 @@ com\alertnusa\view\DisasterCardPanel.class
 com\alertnusa\view\EvacuationPanel.class
 com\alertnusa\view\admBencanaPanel$2.class
 com\alertnusa\view\DashboardPanel$2.class
+com\alertnusa\view\admUserPanel$1.class
 com\alertnusa\controller\PreparationController.class
+com\alertnusa\view\ListUserAdminPanel.class
 com\alertnusa\view\PreparationPanel.class
 com\alertnusa\view\admKontenPanel.class
 com\alertnusa\model\Member.class
@@ -42,3 +46,4 @@ com\alertnusa\view\ForgotPasswordPanel.class
 com\alertnusa\view\admBencanaPanel$1.class
 com\alertnusa\view\RegisterPanel$2.class
 com\alertnusa\view\LoginPanel$1.class
+com\alertnusa\view\admUserPanel$2.class

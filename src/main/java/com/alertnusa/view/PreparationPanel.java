@@ -15,7 +15,9 @@ public class PreparationPanel extends javax.swing.JPanel {
      */
     public PreparationPanel() {
         initComponents();
-        jPanel3.removeAll();
+        
+        initDropdownBencana(); 
+        loadChecklistBencana();
         this.prepController = new com.alertnusa.controller.PreparationController(this);
         
         try {
@@ -25,39 +27,86 @@ public class PreparationPanel extends javax.swing.JPanel {
         }
     }
     
-    public com.alertnusa.controller.PreparationController getPrepController() {
-        return this.prepController;
+    public void initDropdownBencana() {
+        cmbBencana.removeAllItems();
+        String query = "SELECT disaster_name FROM disasters ORDER BY id ASC";
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                cmbBencana.addItem(rs.getString("disaster_name"));
+            }
+        } catch (Exception e) {
+            System.err.println("Gagal memuat dropdown bencana: " + e.getMessage());
+        }
     }
     
-    public void initPreparationChecklist(java.util.List<com.alertnusa.model.PreparationItem> itemList, java.util.List<Integer> checkedIds) {
-        jPanel3.removeAll();
+    public void loadChecklistBencana() {
+        panelChecklist.removeAll();
+        jScrollPane1.setViewportView(panelChecklist); // Memastikan scroll pane mendeteksi panel yang kosong bersih
+
+        String bencanaTerpilih = (cmbBencana.getSelectedItem() != null) ? cmbBencana.getSelectedItem().toString() : "";
         
-        for (com.alertnusa.model.PreparationItem item : itemList) {
-            javax.swing.JCheckBox checkBox = new javax.swing.JCheckBox(item.getTitle());
-            
-            checkBox.setForeground(new java.awt.Color(255, 255, 255));
-            checkBox.setFont(new java.awt.Font("Poppins", 0, 14)); 
-            checkBox.setOpaque(false);
-            
-            // Simpan ID asli item database ke komponen JCheckBox
-            checkBox.putClientProperty("preparationId", item.getId());
-            
-            // ============================================================
-            // KUNCI UTAMA: Cek apakah ID item ini ada di dalam list checkedIds MySQL
-            // ============================================================
-            System.out.println("Memeriksa Item ID: " + item.getId() + " | List Centang dari DB: " + checkedIds);
-            
-            if (checkedIds != null && checkedIds.contains(item.getId())) {
-                checkBox.setSelected(true); 
-                System.out.println("-> BERHASIL DICENTANG: " + item.getTitle()); // Taruh ini juga
-            }
-            // ============================================================
-            
-            checkBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 10, 0));
-            jPanel3.add(checkBox);
+        if (bencanaTerpilih.isEmpty() && cmbBencana.getItemCount() > 0) {
+            bencanaTerpilih = cmbBencana.getItemAt(0).toString();
+            cmbBencana.setSelectedIndex(0); // Setel agar visual dropdown-nya ikut terpilih
         }
-        jPanel3.revalidate();
-        jPanel3.repaint();
+        
+        if (bencanaTerpilih.isEmpty()) {
+            panelChecklist.revalidate();
+            panelChecklist.repaint();
+            return;
+        }
+
+        int idUserAktif = 0;
+        if (com.alertnusa.model.userSession.getCurrentUser() != null) {
+            idUserAktif = com.alertnusa.model.userSession.getCurrentUser().getId();
+        }
+
+        String query = "SELECT p.id, p.title, p.description, "
+                + "(SELECT COUNT(*) FROM user_preparations up WHERE up.preparation_id = p.id AND up.user_id = ?) as sudah_centang "
+                + "FROM preparations p "
+                + "INNER JOIN disasters d ON p.disaster_id = d.id "
+                + "WHERE d.disaster_name = ?";
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, idUserAktif);
+            ps.setString(2, bencanaTerpilih);
+
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int idPrep = rs.getInt("id");
+                    String judul = rs.getString("title");
+                    String deskripsi = rs.getString("description");
+                    boolean isChecked = rs.getInt("sudah_centang") > 0;
+
+                    String formatTeksHTML = "<html><font color='white'><b>" + judul + "</b><br>" + deskripsi.replace("\n", "<br>") + "</font></html>";
+
+                    javax.swing.JCheckBox chk = new javax.swing.JCheckBox(formatTeksHTML);
+                    chk.setSelected(isChecked);
+                    chk.setOpaque(false);
+                    chk.setName(String.valueOf(idPrep));
+                    chk.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 15, 5));
+
+                    // Tambahkan checkbox dinamis ke dalam panel
+                    panelChecklist.add(chk);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error load checklist: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // 2. FIX SAKTI: Segarkan kembali struktur JScrollPane agar layout box-nya menghitung ulang komponen baru
+        panelChecklist.revalidate();
+        panelChecklist.repaint();
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+    }
+    
+    public com.alertnusa.controller.PreparationController getPrepController() {
+        return this.prepController;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,7 +123,8 @@ public class PreparationPanel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
+        panelChecklist = new javax.swing.JPanel();
+        cmbBencana = new javax.swing.JComboBox<>();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -120,10 +170,16 @@ public class PreparationPanel extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 300));
 
-        jPanel3.setBackground(new java.awt.Color(40, 40, 56));
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(jPanel3);
-        jPanel3.getAccessibleContext().setAccessibleDescription("");
+        panelChecklist.setBackground(new java.awt.Color(40, 40, 56));
+        panelChecklist.setLayout(new javax.swing.BoxLayout(panelChecklist, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(panelChecklist);
+        panelChecklist.getAccessibleContext().setAccessibleDescription("");
+
+        cmbBencana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBencana.setMaximumSize(new java.awt.Dimension(200, 30));
+        cmbBencana.setMinimumSize(new java.awt.Dimension(200, 30));
+        cmbBencana.setPreferredSize(new java.awt.Dimension(200, 30));
+        cmbBencana.addActionListener(this::cmbBencanaActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -145,7 +201,10 @@ public class PreparationPanel extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 261, Short.MAX_VALUE)
                         .addComponent(jButton7))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cmbBencana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -156,9 +215,11 @@ public class PreparationPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
+                .addComponent(cmbBencana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
         );
@@ -168,51 +229,65 @@ public class PreparationPanel extends javax.swing.JPanel {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         if (!com.alertnusa.model.userSession.isLoggedIn()) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Anda masuk sebagai Guest. Silakan login terlebih dahulu untuk menyimpan perubahan!", 
-                "Akses Ditolak", 
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return; // Menghentikan proses eksekusi, tidak terjadi apa-apa di database
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Anda masuk sebagai Guest. Silakan login terlebih dahulu untuk menyimpan perubahan!",
+                    "Akses Ditolak",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-        // 2. Jika lolos, berarti user terautentikasi (Admin / Member seperti Edy)
+        // 2. Ambil ID user terautentikasi secara aman
         int loggedInUserId = com.alertnusa.model.userSession.getCurrentUser().getId();
-
         java.util.List<Integer> checkedIds = new java.util.ArrayList<>();
 
-        // 3. Ambil semua id checkbox yang sedang dicentang
-        for (java.awt.Component comp : jPanel3.getComponents()) {
+        // 3. Ambil semua id checkbox yang sedang dicentang oleh user
+        for (java.awt.Component comp : panelChecklist.getComponents()) {
             if (comp instanceof javax.swing.JCheckBox) {
                 javax.swing.JCheckBox cb = (javax.swing.JCheckBox) comp;
                 if (cb.isSelected()) {
-                    int prepId = (int) cb.getClientProperty("preparationId");
-                    checkedIds.add(prepId);
+                    // FIX SAKTI: Ambil ID yang disimpan di properti Name (String) lalu parse ke Integer
+                    if (cb.getName() != null) {
+                        int prepId = Integer.parseInt(cb.getName());
+                        checkedIds.add(prepId);
+                    }
                 }
             }
         }
 
         // 4. Eksekusi simpan permanen ke MySQL via Controller
         if (this.prepController != null) {
-            this.prepController.saveChecklist(loggedInUserId, checkedIds);
+            try {
+                // Jalankan proses simpan data centang ke database
+                this.prepController.saveChecklist(loggedInUserId, checkedIds);
 
-            // Cetak log dinamis ke konsol NetBeans untuk debugging
-            System.out.println("Berhasil memperbarui data checklist untuk User ID: " + loggedInUserId);
+                // Cetak log dinamis ke konsol NetBeans untuk debugging
+                System.out.println("[AlertNusa] Berhasil memperbarui data checklist untuk User ID: " + loggedInUserId);
 
-            // Sinkronisasi ulang data terbaru dari database ke UI
-            this.prepController.loadPreparationData(loggedInUserId);
+                // FIX SAKTI: Sinkronisasi ulang UI menggunakan method dinamis kita yang baru, bukan method lama!
+                loadChecklistBencana();
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Perubahan checklist berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Perubahan checklist berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                System.err.println("Gagal mengeksekusi simpan checklist: " + e.getMessage());
+                e.printStackTrace();
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton7MouseClicked
 
+    private void cmbBencanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBencanaActionPerformed
+        loadChecklistBencana();        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBencanaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbBencana;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelChecklist;
     // End of variables declaration//GEN-END:variables
 }

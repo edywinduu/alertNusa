@@ -28,7 +28,11 @@ public class AdminFrame extends javax.swing.JFrame {
         java.awt.CardLayout cl = (java.awt.CardLayout) adminCardPanel.getLayout();
         cl.show(adminCardPanel, "adminPanel");
     }
-
+    public void panggilLayar(String namaCard) {
+            // Asumsi 'mainPanel' adalah variabel JPanel utama abang yang menggunakan CardLayout
+            java.awt.CardLayout cl = (java.awt.CardLayout) adminCardPanel.getLayout();
+            cl.show(adminCardPanel, namaCard);
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,11 +49,8 @@ public class AdminFrame extends javax.swing.JFrame {
         admUserPanel1 = new com.alertnusa.view.admUserPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(420, 720));
-        setPreferredSize(new java.awt.Dimension(420, 720));
         setResizable(false);
 
-        adminCardPanel.setMaximumSize(new java.awt.Dimension(420, 720));
         adminCardPanel.setPreferredSize(new java.awt.Dimension(420, 720));
         adminCardPanel.setLayout(new java.awt.CardLayout());
         adminCardPanel.add(adminPanel1, "dashboardAdmin");

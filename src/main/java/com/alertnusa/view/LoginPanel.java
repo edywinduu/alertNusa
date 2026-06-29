@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.alertnusa.view;
+package com.alertnusa.view; 
 /**
  *
  * @author edy
@@ -125,7 +125,7 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        Password_Field.setText("admin123");
+        Password_Field.setText("adminanjing");
 
         welcomeLabel6.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
         welcomeLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -247,12 +247,19 @@ public class LoginPanel extends javax.swing.JPanel {
 
             java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
             if (ancestor instanceof javax.swing.JFrame) {
-                ancestor.dispose(); 
+                ancestor.dispose();
             }
-
-            new AdminFrame().setVisible(true);
             
+            String roleUser = com.alertnusa.model.userSession.getCurrentUser().getRole();
 
+            if (roleUser != null && roleUser.equalsIgnoreCase("admin")) {
+                // Jika admin, buka AdminFrame
+                new AdminFrame().setVisible(true);
+            } else {
+                // Jika member atau selain admin, buka MainFrame
+                new MainFrame().setVisible(true);
+            }
+            
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Username/Email atau Password salah!", "Login Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
         }

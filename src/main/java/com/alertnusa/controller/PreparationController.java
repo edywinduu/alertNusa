@@ -4,10 +4,8 @@
  */
 package com.alertnusa.controller;
 import com.alertnusa.model.PreparationRepository;
-import com.alertnusa.model.PreparationItem;
 import com.alertnusa.view.PreparationPanel;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  *
@@ -22,14 +20,14 @@ public class PreparationController {
         this.repo = new PreparationRepository();
     }
 
-    public void loadPreparationData(int userId) {
-        List<com.alertnusa.model.PreparationItem> allItems = repo.getAllPreparations();
-    
-        // 2. AMBIL DATA CENTANG ASLI DARI DATABASE BERDASARKAN USER ID
-        List<Integer> checkedIds = repo.getCheckedPreparationIds(userId); 
+    // Constructor Kosong Tambahan agar pemicuan di panel tidak eror parameter
+    public PreparationController() {
+        this.repo = new PreparationRepository();
+    }
 
-        // 3. Lempar ke UI untuk digambar di layar
-        view.initPreparationChecklist(allItems, checkedIds);
+    // Method lama yang memicu eror 'cannot find symbol' dihapus/dikosongkan kodenya
+    public void loadPreparationData(int userId) {
+        System.out.println("[AlertNusa] Menggunakan load dinamis di panel view.");
     }
 
     public void saveChecklist(int userId, List<Integer> checkedIds) {

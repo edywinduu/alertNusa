@@ -14,13 +14,15 @@ public class User {
     private String email;
     private String username;
     private String password;
+    private String role;
 
     // Constructor
-    public User(int id, String email, String username, String password) {
+    public User(int id, String email, String username, String password, String role) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
     
     public int getId(){
@@ -28,6 +30,14 @@ public class User {
     }
     public void setId(int id){
         this.id = id;
+    }
+    
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
     public String getRoleName() {

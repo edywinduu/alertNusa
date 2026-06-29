@@ -311,7 +311,7 @@
             </Component>
             <Component class="javax.swing.JPasswordField" name="Password_Field">
               <Properties>
-                <Property name="text" type="java.lang.String" value="admin123"/>
+                <Property name="text" type="java.lang.String" value="adminanjing"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="welcomeLabel6">
