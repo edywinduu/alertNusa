@@ -143,6 +143,9 @@ public class PreparationPanel extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton7MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
         });
 
         jLabel1.setFont(new java.awt.Font("Poppins ExtraBold", 0, 36)); // NOI18N
@@ -229,55 +232,81 @@ public class PreparationPanel extends javax.swing.JPanel {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         if (!com.alertnusa.model.userSession.isLoggedIn()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Anda masuk sebagai Guest. Silakan login terlebih dahulu untuk menyimpan perubahan!",
-                    "Akses Ditolak",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Silakan login terlebih dahulu!", "Akses Ditolak", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 2. Ambil ID user terautentikasi secara aman
+        String bencanaTerpilih = (cmbBencana.getSelectedItem() != null) ? cmbBencana.getSelectedItem().toString() : "";
+        if (bencanaTerpilih.isEmpty()) {
+            return;
+        }
+
         int loggedInUserId = com.alertnusa.model.userSession.getCurrentUser().getId();
         java.util.List<Integer> checkedIds = new java.util.ArrayList<>();
 
-        // 3. Ambil semua id checkbox yang sedang dicentang oleh user
+        // 1. Ambil semua ID checkbox yang sedang dicentang di panel aktif saat ini
         for (java.awt.Component comp : panelChecklist.getComponents()) {
             if (comp instanceof javax.swing.JCheckBox) {
                 javax.swing.JCheckBox cb = (javax.swing.JCheckBox) comp;
-                if (cb.isSelected()) {
-                    // FIX SAKTI: Ambil ID yang disimpan di properti Name (String) lalu parse ke Integer
-                    if (cb.getName() != null) {
-                        int prepId = Integer.parseInt(cb.getName());
-                        checkedIds.add(prepId);
-                    }
+                if (cb.isSelected() && cb.getName() != null) {
+                    checkedIds.add(Integer.parseInt(cb.getName()));
                 }
             }
         }
 
-        // 4. Eksekusi simpan permanen ke MySQL via Controller
-        if (this.prepController != null) {
-            try {
-                // Jalankan proses simpan data centang ke database
-                this.prepController.saveChecklist(loggedInUserId, checkedIds);
+        // =========================================================================
+        // SOLUSI UTAMA: Hapus centang LAMA HANYA untuk bencana yang sedang dipilih!
+        // =========================================================================
+        String sqlDeleteSpesifik
+                = "DELETE up FROM user_preparations up "
+                + "INNER JOIN preparations p ON up.preparation_id = p.id "
+                + "INNER JOIN disasters d ON p.disaster_id = d.id "
+                + "WHERE up.user_id = ? AND d.disaster_name = ?";
 
-                // Cetak log dinamis ke konsol NetBeans untuk debugging
-                System.out.println("[AlertNusa] Berhasil memperbarui data checklist untuk User ID: " + loggedInUserId);
+        String sqlInsertNew = "INSERT INTO user_preparations (user_id, preparation_id) VALUES (?, ?)";
 
-                // FIX SAKTI: Sinkronisasi ulang UI menggunakan method dinamis kita yang baru, bukan method lama!
-                loadChecklistBencana();
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection()) {
+            conn.setAutoCommit(false); // Mode transaksi aman baku
 
-                javax.swing.JOptionPane.showMessageDialog(this, "Perubahan checklist berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception e) {
-                System.err.println("Gagal mengeksekusi simpan checklist: " + e.getMessage());
-                e.printStackTrace();
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Step A: Bersihkan riwayat lama KHUSUS bencana terpilih ini saja
+            try (java.sql.PreparedStatement psDel = conn.prepareStatement(sqlDeleteSpesifik)) {
+                psDel.setInt(1, loggedInUserId);
+                psDel.setString(2, bencanaTerpilih);
+                psDel.executeUpdate();
             }
+
+            // Step B: Masukkan data centang yang baru di-checklist oleh user
+            if (!checkedIds.isEmpty()) {
+                try (java.sql.PreparedStatement psIns = conn.prepareStatement(sqlInsertNew)) {
+                    for (int idPrep : checkedIds) {
+                        psIns.setInt(1, loggedInUserId);
+                        psIns.setInt(2, idPrep);
+                        psIns.addBatch();
+                    }
+                    psIns.executeBatch();
+                }
+            }
+
+            conn.commit(); // Simpan permanen perubahan ke database
+            System.out.println("[AlertNusa] Sukses update checklist bencana: " + bencanaTerpilih);
+
+            // Segarkan UI biar data centang ter-load sempurna
+            loadChecklistBencana();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Perubahan berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton7MouseClicked
 
     private void cmbBencanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBencanaActionPerformed
         loadChecklistBencana();        // TODO add your handling code here:
     }//GEN-LAST:event_cmbBencanaActionPerformed
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

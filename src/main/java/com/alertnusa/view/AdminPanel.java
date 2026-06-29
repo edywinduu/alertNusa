@@ -135,6 +135,11 @@ public class AdminPanel extends javax.swing.JPanel {
         jButton14.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jButton14.setForeground(new java.awt.Color(255, 255, 255));
         jButton14.setText("Dashboard (Admin)");
+        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton14MouseClicked(evt);
+            }
+        });
         jButton14.addActionListener(this::jButton14ActionPerformed);
         mainPanelAdmin.add(jButton14);
 
@@ -160,7 +165,7 @@ public class AdminPanel extends javax.swing.JPanel {
         jButton15.setBackground(new java.awt.Color(0, 102, 102));
         jButton15.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("Manajemen Laporan");
+        jButton15.setText("Manajemen Berita");
         jButton15.addActionListener(this::jButton15ActionPerformed);
         mainPanelAdmin.add(jButton15);
 
@@ -237,6 +242,22 @@ public class AdminPanel extends javax.swing.JPanel {
             af.panggilLayar("userPanel"); 
         }        
     }//GEN-LAST:event_jButton11MouseClicked
+
+    private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
+        com.alertnusa.view.MainFrame mainFrame = new com.alertnusa.view.MainFrame();
+
+        
+        mainFrame.panggilCard("dashboard");
+        
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
+
+        // 4. Cari jendela AdminFrame lama yang sedang aktif membungkus panel ini, lalu buang dari RAM
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (parentWindow != null) {
+            parentWindow.dispose();
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

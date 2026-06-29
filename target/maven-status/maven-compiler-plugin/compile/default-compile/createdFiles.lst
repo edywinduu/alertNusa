@@ -18,6 +18,7 @@ com\alertnusa\view\LoginPanel$2.class
 com\alertnusa\view\MainFrame$4.class
 com\alertnusa\main\App.class
 com\alertnusa\model\PreparationRepository.class
+com\alertnusa\view\NewsCardPanel.class
 com\alertnusa\model\User.class
 com\alertnusa\view\DashboardPanel$1.class
 com\alertnusa\util\passwordValidator.class
@@ -25,6 +26,7 @@ com\alertnusa\view\AdminPanel.class
 com\alertnusa\view\ForgotPasswordPanel$2.class
 com\alertnusa\view\MainFrame$3.class
 com\alertnusa\view\AdminPanel$1.class
+com\alertnusa\view\SOSCardPanel.class
 com\alertnusa\view\admUserPanel.class
 com\alertnusa\view\MainFrame.class
 com\alertnusa\view\DisasterCardPanel.class
@@ -44,6 +46,7 @@ com\alertnusa\view\MainFrame$2.class
 com\alertnusa\model\BencanaRepository.class
 com\alertnusa\view\ForgotPasswordPanel.class
 com\alertnusa\view\admBencanaPanel$1.class
+com\alertnusa\view\AdminPanel$3.class
 com\alertnusa\view\RegisterPanel$2.class
 com\alertnusa\view\LoginPanel$1.class
 com\alertnusa\view\admUserPanel$2.class

@@ -15,8 +15,49 @@ public class SOSPanel extends javax.swing.JPanel {
      */
     public SOSPanel() {
         initComponents();
+        loadKontakDarurat();
     }
 
+    public void loadKontakDarurat() {
+        panelListSOS.removeAll();
+
+        // Pastikan layout diatur tegas via kode juga
+        panelListSOS.setLayout(new javax.swing.BoxLayout(panelListSOS, javax.swing.BoxLayout.Y_AXIS));
+
+        String query = "SELECT institution_name, phone_number, region, description FROM sos_contacts ORDER BY id ASC";
+        int jumlahKartu = 0;
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String nama = rs.getString("institution_name");
+                String nomor = rs.getString("phone_number");
+                String wilayah = rs.getString("region");
+                String deskripsi = rs.getString("description");
+
+                // Instansiasi kartu SOS baru
+                SOSCardPanel kartuSOS = new SOSCardPanel(nama, nomor, wilayah, deskripsi);
+
+                // Masukkan ke penampung
+                panelListSOS.add(kartuSOS);
+                panelListSOS.add(javax.swing.Box.createVerticalStrut(12)); // Jarak antar kartu
+                jumlahKartu++;
+            }
+           
+
+        } catch (Exception e) {
+            System.err.println("[AlertNusa] Gagal memuat database SOS: " + e.getMessage());
+            e.printStackTrace();
+        }
+        panelListSOS.add(javax.swing.Box.createVerticalGlue()); // Biar kartu tidak melar
+        jScrollPane1.setViewportView(panelListSOS);
+
+        // Segarkan visual layar
+        panelListSOS.revalidate();
+        panelListSOS.repaint();
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +71,8 @@ public class SOSPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanelTema1 = new javax.swing.JPanel();
-        labelJudul1 = new javax.swing.JLabel();
-        labelDeskripsi1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelListSOS = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setPreferredSize(new java.awt.Dimension(420, 720));
@@ -64,38 +104,17 @@ public class SOSPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Kontak Darurat");
 
-        jPanelTema1.setBackground(new java.awt.Color(40, 40, 56));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(380, 450));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 450));
 
-        labelJudul1.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        labelJudul1.setForeground(new java.awt.Color(255, 255, 255));
-        labelJudul1.setText("List Kontak Darurat:");
-
-        labelDeskripsi1.setFont(new java.awt.Font("Poppins Light", 0, 12)); // NOI18N
-        labelDeskripsi1.setForeground(new java.awt.Color(255, 255, 255));
-        labelDeskripsi1.setText("+6285737231626 (Edy)");
-
-        javax.swing.GroupLayout jPanelTema1Layout = new javax.swing.GroupLayout(jPanelTema1);
-        jPanelTema1.setLayout(jPanelTema1Layout);
-        jPanelTema1Layout.setHorizontalGroup(
-            jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTema1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTema1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(labelDeskripsi1))
-                    .addComponent(labelJudul1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelTema1Layout.setVerticalGroup(
-            jPanelTema1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTema1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelJudul1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelDeskripsi1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
-        );
+        panelListSOS.setBackground(new java.awt.Color(40, 40, 56));
+        panelListSOS.setAutoscrolls(true);
+        panelListSOS.setMaximumSize(new java.awt.Dimension(32767, 32767));
+        panelListSOS.setLayout(new javax.swing.BoxLayout(panelListSOS, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(panelListSOS);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -113,7 +132,7 @@ public class SOSPanel extends javax.swing.JPanel {
                         .addGap(142, 142, 142))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelTema1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -124,9 +143,9 @@ public class SOSPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelTema1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(421, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -138,8 +157,7 @@ public class SOSPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelTema1;
-    private javax.swing.JLabel labelDeskripsi1;
-    private javax.swing.JLabel labelJudul1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelListSOS;
     // End of variables declaration//GEN-END:variables
 }

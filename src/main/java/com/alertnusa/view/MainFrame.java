@@ -49,6 +49,14 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.repaint();
         
     }
+    public void panggilCard(String namaCardTujuan) {
+        if (mainPanel != null && mainPanel.getLayout() instanceof java.awt.CardLayout) {
+            java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
+            cl.show(mainPanel, namaCardTujuan);
+        } else {
+            System.err.println("[AlertNusa Error] mainPanel tidak menggunakan CardLayout atau bernilai null!");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

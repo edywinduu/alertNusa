@@ -4,6 +4,10 @@
  */
 package com.alertnusa.view;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import com.alertnusa.util.DatabaseConnection;
 /**
  *
  * @author edy
@@ -15,6 +19,44 @@ public class EvacuationPanel extends javax.swing.JPanel {
      */
     public EvacuationPanel() {
         initComponents();
+        loadDaftarBerita();
+    }
+    public void loadDaftarBerita() {
+        // 1. Bersihkan isi panel kontainer berita lama dari memori visual
+        listBerita.removeAll();
+
+        // 2. Kueri ambil data dari tabel disaster_news yang kita buat di MySQL
+        String query = "SELECT title, content, location, news_date FROM disaster_news ORDER BY news_date DESC";
+
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String judul = rs.getString("title");
+                String konten = rs.getString("content");
+                String lokasi = rs.getString("location");
+                String tanggal = rs.getTimestamp("news_date").toString();
+
+                // 3. Instansiasi komponen kartu berita baru
+                NewsCardPanel kartuBerita = new NewsCardPanel(judul, konten, lokasi, tanggal);
+
+                // 4. Masukkan kartu ke dalam listBerita yang ber-BoxLayout
+                listBerita.add(kartuBerita);
+
+                // Beri sedikit jarak vertikal antar-kartu (margin baki aman sebesar 10 piksel)
+                listBerita.add(javax.swing.Box.createVerticalStrut(10));
+            }
+
+        } catch (Exception e) {
+            System.err.println("[AlertNusa] Gagal memuat komponen kartu berita: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        listBerita.add(javax.swing.Box.createVerticalGlue());
+        // 5. Paksa UI untuk menggambar ulang seluruh struktur kartu baru agar muncul di layar
+        listBerita.revalidate();
+        listBerita.repaint();
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
     }
 
     /**
@@ -31,7 +73,7 @@ public class EvacuationPanel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        listBerita = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
@@ -62,15 +104,16 @@ public class EvacuationPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Katalog Bencana");
+        jLabel2.setText("Berita Bencana");
 
         jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setToolTipText("");
 
-        jPanel1.setBackground(new java.awt.Color(40, 40, 56));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(jPanel1);
+        listBerita.setBackground(new java.awt.Color(40, 40, 56));
+        listBerita.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        listBerita.setLayout(new javax.swing.BoxLayout(listBerita, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(listBerita);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -81,14 +124,14 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(97, 97, 97))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(121, 121, 121))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(137, 137, 137)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,8 +142,8 @@ public class EvacuationPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -110,9 +153,9 @@ public class EvacuationPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel listBerita;
     // End of variables declaration//GEN-END:variables
 }
