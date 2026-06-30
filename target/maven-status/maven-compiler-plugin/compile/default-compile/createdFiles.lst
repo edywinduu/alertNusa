@@ -13,6 +13,7 @@ com\alertnusa\view\admKontenPanel$1.class
 com\alertnusa\view\TambahKatalogDialog$1.class
 com\alertnusa\view\MainFrame$1.class
 com\alertnusa\model\PreparationItem.class
+com\alertnusa\view\EditBeritaDialog.class
 com\alertnusa\view\TambahBeritaDialog.class
 com\alertnusa\view\DashboardPanel.class
 com\alertnusa\view\LoginPanel.class

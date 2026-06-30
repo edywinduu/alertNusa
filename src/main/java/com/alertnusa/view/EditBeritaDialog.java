@@ -13,29 +13,26 @@ public class EditBeritaDialog extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditBeritaDialog.class.getName());
 
-    private int idBencana;
-    private admKontenPanel parentPanel;
+    private int id;
+    private admBencanaPanel parentPanel;
     /**
      * Creates new form EditKatalogDialog
      */
-    public EditBeritaDialog(java.awt.Frame parent, boolean modal, int id, String nama, String deskripsi, String prep, admKontenPanel parentPanel) {
+    public EditBeritaDialog(java.awt.Frame parent, boolean modal, int id, String judul, String tanggal, String isi, admBencanaPanel parentPanel) {
         super(parent != null ? parent : (java.awt.Frame) null, modal);
         initComponents();
-        this.idBencana = id;
+        this.id = id;
         this.parentPanel = parentPanel;
 
-        // Set info komponen dialog
-        lblJudulBencana.setText("Edit Konten: " + nama);
-        txtEditDeskripsi.setText(deskripsi);
-        txtEditPrep.setText(prep);
+        // 1. LANGSUNG SET DATA LAMA KE FORM BIAR ADMIN TINGGAL EDIT, CUY!
+        txtTitle.setText(judul);
+        txtContent.setText(isi);
+        // Catatan: Jika abang punya inputan lokasi di desainer, pasang kueri SELECT lokasi dulu 
+        // atau sementara set lokasi kosong/default jika tidak dioper. 
+        // Misal dioper: txtLocation.setText(lokasi);
 
-        // Pengaturan teks area agar otomatis turun baris
-        txtEditDeskripsi.setLineWrap(true);
-        txtEditDeskripsi.setWrapStyleWord(true);
-        txtEditPrep.setLineWrap(true);
-        txtEditPrep.setWrapStyleWord(true);
-
-        // Posisikan pop-up otomatis di tengah layar
+        // Visual gelap estetik runtime
+        this.getContentPane().setBackground(new java.awt.Color(30, 30, 36));
         this.setLocationRelativeTo(parent);
     }
 
@@ -49,12 +46,15 @@ public class EditBeritaDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         lblJudulBencana = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtEditDeskripsi = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtEditPrep = new javax.swing.JTextArea();
+        txtTitle = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
+        lblJudulBencana1 = new javax.swing.JLabel();
+        txtLocation = new javax.swing.JTextField();
+        lblJudulBencana2 = new javax.swing.JLabel();
+        lblJudulBencana3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtContent = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(40, 40, 56));
@@ -62,17 +62,7 @@ public class EditBeritaDialog extends javax.swing.JDialog {
         lblJudulBencana.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         lblJudulBencana.setForeground(new java.awt.Color(255, 255, 255));
         lblJudulBencana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJudulBencana.setText("jLabel1");
-
-        txtEditDeskripsi.setBackground(new java.awt.Color(24, 24, 24));
-        txtEditDeskripsi.setColumns(20);
-        txtEditDeskripsi.setRows(5);
-        jScrollPane1.setViewportView(txtEditDeskripsi);
-
-        txtEditPrep.setBackground(new java.awt.Color(24, 24, 24));
-        txtEditPrep.setColumns(20);
-        txtEditPrep.setRows(5);
-        jScrollPane2.setViewportView(txtEditPrep);
+        lblJudulBencana.setText("BERITA");
 
         btnSimpan.setBackground(new java.awt.Color(0, 102, 102));
         btnSimpan.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
@@ -86,6 +76,27 @@ public class EditBeritaDialog extends javax.swing.JDialog {
         btnBatal.setText("Batal");
         btnBatal.addActionListener(this::btnBatalActionPerformed);
 
+        lblJudulBencana1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        lblJudulBencana1.setForeground(new java.awt.Color(255, 255, 255));
+        lblJudulBencana1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJudulBencana1.setText("JUDUL");
+
+        lblJudulBencana2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        lblJudulBencana2.setForeground(new java.awt.Color(255, 255, 255));
+        lblJudulBencana2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJudulBencana2.setText("LOKASI");
+
+        lblJudulBencana3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        lblJudulBencana3.setForeground(new java.awt.Color(255, 255, 255));
+        lblJudulBencana3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJudulBencana3.setText("Konten");
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        txtContent.setColumns(20);
+        txtContent.setRows(5);
+        jScrollPane1.setViewportView(txtContent);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,16 +105,26 @@ public class EditBeritaDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblJudulBencana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(lblJudulBencana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(btnSimpan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBatal)
-                        .addGap(0, 109, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(123, 123, 123)
+                                .addComponent(btnSimpan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBatal))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblJudulBencana1)
+                                    .addComponent(txtTitle)
+                                    .addComponent(txtLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                                    .addComponent(lblJudulBencana2)
+                                    .addComponent(lblJudulBencana3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -111,11 +132,19 @@ public class EditBeritaDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblJudulBencana)
+                .addGap(36, 36, 36)
+                .addComponent(lblJudulBencana1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(lblJudulBencana2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(lblJudulBencana3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan)
                     .addComponent(btnBatal))
@@ -126,27 +155,37 @@ public class EditBeritaDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        String query = "UPDATE disasters SET description = ?, preparation = ? WHERE id = ?";
+        String judulBaru = txtTitle.getText().trim();
+        String isiBaru = txtContent.getText().trim();
+        // String lokasiBaru = txtLocation.getText().trim(); // Aktifkan jika ada variabelnya
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+        if (judulBaru.isEmpty() || isiBaru.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Kolom judul dan isi tidak boleh kosong!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            ps.setString(1, txtEditDeskripsi.getText().trim());
-            ps.setString(2, txtEditPrep.getText().trim());
-            ps.setInt(3, idBencana);
+        // Kueri UPDATE data berita berdasarkan ID spesifik
+        String query = "UPDATE disaster_news SET title = ?, content = ? WHERE id = ?";
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, judulBaru);
+            ps.setString(2, isiBaru);
+            ps.setInt(3, this.id); // Menembak ID berita ini
 
             int hasil = ps.executeUpdate();
             if (hasil > 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Data Katalog Bencana berhasil diperbarui!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Berita berhasil diperbarui!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-                // Refresh list katalog di halaman admin utama secara live
-                parentPanel.loadDataAdmin();
-
-                // Tutup pop-up dialog
-                this.dispose();
+                // Pemicu Live Refresh layar utama admin secara real-time
+                if (parentPanel != null) {
+                    parentPanel.loadDataBerita();
+                }
+                this.dispose(); // Tutup dialog edit
             }
 
-        } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengupdate database: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui berita: " + e.getMessage(), "Error Database", javax.swing.JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    // TODO add your handling code here:
     }//GEN-LAST:event_btnSimpanActionPerformed
@@ -196,9 +235,12 @@ public class EditBeritaDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnBatal;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblJudulBencana;
-    private javax.swing.JTextArea txtEditDeskripsi;
-    private javax.swing.JTextArea txtEditPrep;
+    private javax.swing.JLabel lblJudulBencana1;
+    private javax.swing.JLabel lblJudulBencana2;
+    private javax.swing.JLabel lblJudulBencana3;
+    private javax.swing.JTextArea txtContent;
+    private javax.swing.JTextField txtLocation;
+    private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }

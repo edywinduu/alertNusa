@@ -120,7 +120,18 @@ public class ItemBeritaAdminPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
 
+        if (ancestor instanceof java.awt.Frame) {
+            // 2. Ambil teks judul, tanggal, dan isi yang saat ini nempel di kartu mini
+            String judulLama = lblJudulBerita.getText();
+            String tanggalLama = lblTanggal.getText();
+            String isiLama = txtPratinjau.getText();
+
+            // 3. Terbangkan semua datanya ke constructor dialog edit bersama jembatan parentPanel
+            EditBeritaDialog dialog = new EditBeritaDialog((java.awt.Frame) ancestor, true, this.id, judulLama, tanggalLama, isiLama, this.parentPanel);
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
