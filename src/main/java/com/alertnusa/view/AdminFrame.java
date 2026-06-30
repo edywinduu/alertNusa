@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.alertnusa.view;
-
+import com.alertnusa.view.admBencanaPanel;
 /**
  *
  * @author edy
@@ -21,7 +21,6 @@ public class AdminFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         adminCardPanel.add(new AdminPanel(), "adminPanel");
-        adminCardPanel.add(new admBencanaPanel(), "bencanaPanel");
         adminCardPanel.add(new admKontenPanel(), "kontenPanel");
         adminCardPanel.add(new admUserPanel(), "userPanel");
         
@@ -32,6 +31,12 @@ public class AdminFrame extends javax.swing.JFrame {
             // Asumsi 'mainPanel' adalah variabel JPanel utama abang yang menggunakan CardLayout
             java.awt.CardLayout cl = (java.awt.CardLayout) adminCardPanel.getLayout();
             cl.show(adminCardPanel, namaCard);
+            
+            if (namaCard.equals("beritaPanel")) {
+            if (admBencanaPanel != null) {
+                admBencanaPanel.loadDataBerita(); // Fungsi kueri database berita
+            }
+        }
         }
     
     /**
@@ -45,7 +50,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         adminCardPanel = new javax.swing.JPanel();
         adminPanel1 = new com.alertnusa.view.AdminPanel();
-        admBencanaPanel1 = new com.alertnusa.view.admBencanaPanel();
+        admBencanaPanel = new com.alertnusa.view.admBencanaPanel();
         admKontenPanel1 = new com.alertnusa.view.admKontenPanel();
         admUserPanel1 = new com.alertnusa.view.admUserPanel();
 
@@ -54,8 +59,14 @@ public class AdminFrame extends javax.swing.JFrame {
 
         adminCardPanel.setPreferredSize(new java.awt.Dimension(420, 720));
         adminCardPanel.setLayout(new java.awt.CardLayout());
+
+        adminPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adminPanel1MouseClicked(evt);
+            }
+        });
         adminCardPanel.add(adminPanel1, "dashboardAdmin");
-        adminCardPanel.add(admBencanaPanel1, "bencanaPanel");
+        adminCardPanel.add(admBencanaPanel, "beritaPanel");
         adminCardPanel.add(admKontenPanel1, "kontenPanel");
         adminCardPanel.add(admUserPanel1, "userPanel");
 
@@ -63,6 +74,10 @@ public class AdminFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void adminPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPanel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminPanel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -90,7 +105,7 @@ public class AdminFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.alertnusa.view.admBencanaPanel admBencanaPanel1;
+    private com.alertnusa.view.admBencanaPanel admBencanaPanel;
     private com.alertnusa.view.admKontenPanel admKontenPanel1;
     private com.alertnusa.view.admUserPanel admUserPanel1;
     private javax.swing.JPanel adminCardPanel;

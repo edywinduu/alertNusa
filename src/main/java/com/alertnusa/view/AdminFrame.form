@@ -39,16 +39,19 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
         <Component class="com.alertnusa.view.AdminPanel" name="adminPanel1">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="adminPanel1MouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="dashboardAdmin"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.alertnusa.view.admBencanaPanel" name="admBencanaPanel1">
+        <Component class="com.alertnusa.view.admBencanaPanel" name="admBencanaPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="bencanaPanel"/>
+              <CardConstraints cardName="beritaPanel"/>
             </Constraint>
           </Constraints>
         </Component>

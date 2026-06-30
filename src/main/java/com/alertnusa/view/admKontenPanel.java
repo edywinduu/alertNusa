@@ -3,18 +3,50 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.alertnusa.view;
+import com.alertnusa.view.TambahKatalogDialog;
 /**
  *
  * @author edy
  */
 public class admKontenPanel extends javax.swing.JPanel {
 
+    
     /**
      * Creates new form DashboardPanel
      */
     public admKontenPanel() {
         initComponents();
     }
+    
+    public void loadDataAdmin() {
+        listKontenKatalog.removeAll();
+        listKontenKatalog.setLayout(new javax.swing.BoxLayout(listKontenKatalog, javax.swing.BoxLayout.Y_AXIS));
+
+        String query = "SELECT id, disaster_name, description, category, risk_level FROM disasters ORDER BY id ASC";
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nama = rs.getString("disaster_name");
+                String deskripsi = rs.getString("description");
+                String kategori = rs.getString("category");
+
+                ItemKatalogBencanaAdminPanel kartu = new ItemKatalogBencanaAdminPanel(id, nama, deskripsi, kategori, this);
+                listKontenKatalog.add(kartu);
+                listKontenKatalog.add(javax.swing.Box.createVerticalStrut(10));
+            }
+
+        } catch (java.sql.SQLException e) {
+            System.err.println("Gagal memuat katalog: " + e.getMessage());
+        }
+
+        listKontenKatalog.revalidate();
+        listKontenKatalog.repaint();
+        jScrollPaneKatalog.revalidate();
+        jScrollPaneKatalog.repaint();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -24,44 +56,24 @@ public class admKontenPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        listKonten = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jButton16 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
         pilihanKonten = new javax.swing.JPanel();
         jButton13 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        btnSOS = new javax.swing.JButton();
+        mainContainerAdmin = new javax.swing.JPanel();
+        jScrollPaneKatalog = new javax.swing.JScrollPane();
+        listKontenKatalog = new javax.swing.JPanel();
+        jScrollPaneSOS = new javax.swing.JScrollPane();
+        listKontenSOS = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
         setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
         jPanel2.setMaximumSize(new java.awt.Dimension(420, 720));
@@ -93,262 +105,72 @@ public class admKontenPanel extends javax.swing.JPanel {
         jLabel2.setText("Manajemen Konten");
         jPanel3.add(jLabel2);
 
-        jButton8.setBackground(new java.awt.Color(255, 0, 0));
-        jButton8.setFont(new java.awt.Font("Poppins SemiBold", 0, 8)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("+ Tambah");
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel3.add(jButton8);
-
-        listKonten.setBackground(new java.awt.Color(40, 40, 56));
-        listKonten.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        listKonten.setLayout(new javax.swing.BoxLayout(listKonten, javax.swing.BoxLayout.Y_AXIS));
-
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel5.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Gempa Bumi");
-
-        jLabel6.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Desc...");
-
-        jButton9.setBackground(new java.awt.Color(0, 102, 102));
-        jButton9.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Baca Selengkapnya");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addGap(14, 14, 14))
-        );
-
-        listKonten.add(jPanel7);
-
-        jPanel8.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel7.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Tsunami");
-
-        jLabel8.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Desc...");
-
-        jButton10.setBackground(new java.awt.Color(0, 102, 102));
-        jButton10.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Baca Selengkapnya");
-        jButton10.addActionListener(this::jButton10ActionPerformed);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton10)
-                .addContainerGap())
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton10)
-                .addGap(14, 14, 14))
-        );
-
-        listKonten.add(jPanel8);
-
-        jPanel9.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel9.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Tanah Longsor");
-
-        jLabel10.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Desc...");
-
-        jButton11.setBackground(new java.awt.Color(0, 102, 102));
-        jButton11.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Baca Selengkapnya");
-        jButton11.addActionListener(this::jButton11ActionPerformed);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11)
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11)
-                .addGap(14, 14, 14))
-        );
-
-        listKonten.add(jPanel9);
-
-        jPanel10.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel11.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Banjir");
-
-        jLabel12.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Desc...");
-
-        jButton12.setBackground(new java.awt.Color(0, 102, 102));
-        jButton12.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Baca Selengkapnya");
-        jButton12.addActionListener(this::jButton12ActionPerformed);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton12)
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton12)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        listKonten.add(jPanel10);
-
-        jPanel14.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel13.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Gunung Meletus");
-
-        jLabel14.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Desc...");
-
-        jButton16.setBackground(new java.awt.Color(0, 102, 102));
-        jButton16.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Baca Selengkapnya");
-        jButton16.addActionListener(this::jButton16ActionPerformed);
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                .addComponent(jButton16)
-                .addContainerGap())
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton16)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        listKonten.add(jPanel14);
+        jButton14.setBackground(new java.awt.Color(0, 102, 102));
+        jButton14.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
+        jButton14.setText("+ Tambah");
+        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton14MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton14);
 
         pilihanKonten.setBackground(new java.awt.Color(40, 40, 56));
-        pilihanKonten.setLayout(new java.awt.GridLayout(1, 3, 20, 0));
+        pilihanKonten.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
 
         jButton13.setBackground(new java.awt.Color(0, 102, 102));
-        jButton13.setFont(new java.awt.Font("Poppins SemiBold", 0, 8)); // NOI18N
+        jButton13.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jButton13.setForeground(new java.awt.Color(255, 255, 255));
-        jButton13.setText("Preparation ");
+        jButton13.setText("Katalog");
+        jButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton13MouseClicked(evt);
+            }
+        });
         pilihanKonten.add(jButton13);
 
-        jButton7.setBackground(new java.awt.Color(0, 102, 102));
-        jButton7.setFont(new java.awt.Font("Poppins SemiBold", 0, 8)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Evacuation");
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        pilihanKonten.add(jButton7);
+        btnSOS.setBackground(new java.awt.Color(0, 102, 102));
+        btnSOS.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        btnSOS.setForeground(new java.awt.Color(255, 255, 255));
+        btnSOS.setText("SOS");
+        btnSOS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSOSMouseClicked(evt);
+            }
+        });
+        btnSOS.addActionListener(this::btnSOSActionPerformed);
+        pilihanKonten.add(btnSOS);
 
-        jButton15.setBackground(new java.awt.Color(0, 102, 102));
-        jButton15.setFont(new java.awt.Font("Poppins SemiBold", 0, 8)); // NOI18N
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("SOS");
-        jButton15.addActionListener(this::jButton15ActionPerformed);
-        pilihanKonten.add(jButton15);
+        mainContainerAdmin.setBackground(new java.awt.Color(40, 40, 56));
+        mainContainerAdmin.setLayout(new java.awt.CardLayout());
+
+        jScrollPaneKatalog.setBackground(new java.awt.Color(40, 40, 56));
+
+        listKontenKatalog.setBackground(new java.awt.Color(40, 40, 56));
+
+        javax.swing.GroupLayout listKontenKatalogLayout = new javax.swing.GroupLayout(listKontenKatalog);
+        listKontenKatalog.setLayout(listKontenKatalogLayout);
+        listKontenKatalogLayout.setHorizontalGroup(
+            listKontenKatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        listKontenKatalogLayout.setVerticalGroup(
+            listKontenKatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 489, Short.MAX_VALUE)
+        );
+
+        jScrollPaneKatalog.setViewportView(listKontenKatalog);
+
+        mainContainerAdmin.add(jScrollPaneKatalog, "katalogPage");
+
+        jScrollPaneSOS.setBackground(new java.awt.Color(40, 40, 56));
+
+        listKontenSOS.setBackground(new java.awt.Color(40, 40, 56));
+        listKontenSOS.setLayout(new javax.swing.BoxLayout(listKontenSOS, javax.swing.BoxLayout.LINE_AXIS));
+        jScrollPaneSOS.setViewportView(listKontenSOS);
+
+        mainContainerAdmin.add(jScrollPaneSOS, "SOSPage");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -356,19 +178,19 @@ public class admKontenPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(listKonten, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pilihanKonten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(328, 328, 328))
+                    .addComponent(pilihanKonten, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainContainerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,80 +203,142 @@ public class admKontenPanel extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addComponent(pilihanKonten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(listKonten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(479, Short.MAX_VALUE))
+                .addComponent(mainContainerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setViewportView(jPanel2);
-
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(jPanel2, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnSOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSOSActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnSOSActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContainerAdmin.getLayout();
+        cl.show(mainContainerAdmin, "katalogPage");
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+        // 2. PAKSA JALAN METHOD PENARIK DATA DARI DATABASENYA DI SINI, BLI!
+        this.loadDataAdmin();
+        listKontenKatalog.removeAll();
+        listKontenKatalog.setLayout(new javax.swing.BoxLayout(listKontenKatalog, javax.swing.BoxLayout.Y_AXIS));
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+        // Kueri yang sudah disesuaikan dengan gambar image_e605e4.png
+        String query = "SELECT id, disaster_name, description, category, risk_level FROM disasters ORDER BY id ASC";
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nama = rs.getString("disaster_name"); // Sesuaikan nama kolom
+                String deskripsi = rs.getString("description");
+                String kategori = rs.getString("category");    // Menangkap enum category
+                String levelRisiko = rs.getString("risk_level"); // Menangkap enum risk_level
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+                // Masukkan variabel yang sesuai ke dalam Constructor kartu abang
+                // (Jika kartu abang masih pakai parameter lama, sementara string 'kategori' atau 'levelRisiko' bisa dioper ke posisi parameter ke-4)
+                ItemKatalogBencanaAdminPanel kartu = new ItemKatalogBencanaAdminPanel(id, nama, deskripsi, kategori, this);
+
+                listKontenKatalog.add(kartu);
+                listKontenKatalog.add(javax.swing.Box.createVerticalStrut(10));
+            }
+
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memuat katalog: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        // 3. Refresh komponen GUI agar kartu langsung dirender keluar secara live
+        listKontenKatalog.revalidate();
+        listKontenKatalog.repaint();
+        jScrollPaneKatalog.revalidate();
+        jScrollPaneKatalog.repaint();
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton16ActionPerformed
+    }//GEN-LAST:event_jButton13MouseClicked
+
+    private void btnSOSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSOSMouseClicked
+        java.awt.CardLayout cl = (java.awt.CardLayout) mainContainerAdmin.getLayout();
+        cl.show(mainContainerAdmin, "SOSPage");
+
+        // 2. Bersihkan dan muat ulang data SOS secara real-time
+        listKontenSOS.removeAll();
+        listKontenSOS.setLayout(new javax.swing.BoxLayout(listKontenSOS, javax.swing.BoxLayout.Y_AXIS));
+
+        String query = "SELECT id, institution_name, phone_number, region FROM sos_contacts ORDER BY id ASC";
+        int jumlahKartu = 0;
+
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nama = rs.getString("institution_name");
+                String nomor = rs.getString("phone_number");
+                String wilayah = rs.getString("region");
+
+                // Buat objek kartu SOS khusus admin (yang ada tombol hapusnya)
+                SOSCardAdminPanel kartu = new SOSCardAdminPanel(id, nama, nomor, wilayah, this);
+                listKontenSOS.add(kartu);
+                listKontenSOS.add(javax.swing.Box.createVerticalStrut(10)); // Jarak antar kartu
+                jumlahKartu++;
+            }
+
+        } catch (Exception e) {
+            System.err.println("[AlertNusa] Gagal memuat data SOS admin: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Biar kartu tidak melar kaku ke bawah dan scroll-nya aktif sempurna
+        listKontenSOS.add(javax.swing.Box.createVerticalGlue());
+        jScrollPaneSOS.setViewportView(listKontenSOS);
+        jScrollPaneSOS.getVerticalScrollBar().setUnitIncrement(16);
+
+        // Refresh render layar
+        listKontenSOS.revalidate();
+        listKontenSOS.repaint();
+        jScrollPaneSOS.revalidate();
+        jScrollPaneSOS.repaint();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSOSMouseClicked
+
+    private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
+        java.awt.Component comp = this;
+        while (comp != null && !(comp instanceof java.awt.Frame)) {
+            comp = comp.getParent();
+        }
+        java.awt.Frame parentFrame = (java.awt.Frame) comp;
+
+        // 2. CEK HALAMAN AKTIF: Kita cek JScrollPane mana yang sedang terlihat (visible)
+        if (jScrollPaneSOS.isVisible()) {
+
+            // JIKA HALAMAN SOS YANG AKTIF: Munculkan dialog tambah kontak SOS
+            TambahSOSDialog dialogSOS = new TambahSOSDialog(parentFrame, true, this);
+            dialogSOS.setVisible(true);
+
+        } else if (jScrollPaneKatalog.isVisible()) {
+
+            TambahKatalogDialog dialogKatalog = new TambahKatalogDialog(parentFrame, true, this);
+            dialogKatalog.setVisible(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton btnSOS;
+    public javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel listKonten;
+    private javax.swing.JScrollPane jScrollPaneKatalog;
+    private javax.swing.JScrollPane jScrollPaneSOS;
+    private javax.swing.JPanel listKontenKatalog;
+    private javax.swing.JPanel listKontenSOS;
+    private javax.swing.JPanel mainContainerAdmin;
     private javax.swing.JPanel pilihanKonten;
     // End of variables declaration//GEN-END:variables
+public void refreshHalamanSOS() {
+        this.btnSOSActionPerformed(null);}
+
 }

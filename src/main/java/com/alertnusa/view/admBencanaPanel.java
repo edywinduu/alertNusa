@@ -9,144 +9,47 @@ package com.alertnusa.view;
  */
 
 public class admBencanaPanel extends javax.swing.JPanel {
-    private void tampilkanDetailWindow(String judul, String isiDeskripsi) {
-        javax.swing.JDialog detailFrame = new javax.swing.JDialog((java.awt.Frame) null, "Detail Bencana", true);
-        detailFrame.setSize(400, 450);
-        detailFrame.setLocationRelativeTo(null);
-        detailFrame.getContentPane().setBackground(new java.awt.Color(24, 24, 24)); // Background Secondary
-        detailFrame.setLayout(new java.awt.BorderLayout(15, 15));
-
-        // Panel Konten Utama (Warna Utama [40, 40, 56])
-        javax.swing.JPanel pnlKonten = new javax.swing.JPanel();
-        pnlKonten.setBackground(new java.awt.Color(40, 40, 56));
-        pnlKonten.setLayout(new java.awt.BorderLayout(10, 10));
-        pnlKonten.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-        // Label Judul Bencana
-        javax.swing.JLabel lblJudul = new javax.swing.JLabel(judul);
-        lblJudul.setFont(new java.awt.Font("Poppins", java.awt.Font.BOLD, 18));
-        lblJudul.setForeground(java.awt.Color.WHITE);
-        pnlKonten.add(lblJudul, java.awt.BorderLayout.NORTH);
-
-        // Area Teks Deskripsi
-        javax.swing.JTextArea txtArea = new javax.swing.JTextArea(isiDeskripsi);
-        txtArea.setEditable(false);
-        txtArea.setLineWrap(true);
-        txtArea.setWrapStyleWord(true);
-        txtArea.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13));
-        txtArea.setBackground(new java.awt.Color(24, 24, 24)); // Background isi teks dibuat kontras
-        txtArea.setForeground(new java.awt.Color(220, 220, 220));
-        txtArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-
-        javax.swing.JScrollPane scrollDeskripsi = new javax.swing.JScrollPane(txtArea);
-        scrollDeskripsi.setBorder(null);
-        pnlKonten.add(scrollDeskripsi, java.awt.BorderLayout.CENTER);
-
-        // Tombol Tutup
-        javax.swing.JButton btnTutup = new javax.swing.JButton("Tutup");
-        btnTutup.setBackground(new java.awt.Color(24, 24, 24));
-        btnTutup.setForeground(java.awt.Color.WHITE);
-        btnTutup.setFocusPainted(false);
-        btnTutup.addActionListener(e -> detailFrame.dispose());
-
-        detailFrame.add(pnlKonten, java.awt.BorderLayout.CENTER);
-        detailFrame.add(btnTutup, java.awt.BorderLayout.SOUTH);
-
-        detailFrame.setVisible(true);
-    }
-    
-    private void hapusDataBencana(int idBencana) {
-        String sql = "DELETE FROM disasters WHERE id = ?";
-        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection();
-             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, idBencana);
-            int hasil = ps.executeUpdate();
-
-            if (hasil > 0) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Data bencana berhasil dihapus!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loadKatalogAdmin(); // Refresh katalog secara otomatis agar datanya hilang dari layar
-            }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Gagal menghapus data: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     /**
      * Creates new form DashboardPanel
      */
     public admBencanaPanel() {
         initComponents();
+        
     }
-    public void loadKatalogAdmin() {
-        katalogPanel.removeAll();
-        katalogPanel.setLayout(new javax.swing.BoxLayout(katalogPanel, javax.swing.BoxLayout.Y_AXIS));
+    public void loadDataBerita() {
+        // 1. Kosongkan kontainer sebelum memuat ulang
+        listBeritaContainer.removeAll();
+        listBeritaContainer.setLayout(new javax.swing.BoxLayout(listBeritaContainer, javax.swing.BoxLayout.Y_AXIS));
 
-        // Kunci ukuran scroll pane agar konsisten di lebar 420
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        // 2. KVERI BENAR: Pakai tabel 'disaster_news' dan kolom 'news_date'
+        String query = "SELECT id, title, content, location, news_date FROM disaster_news ORDER BY id DESC";
 
-        String query = "SELECT id, name, description FROM disasters";
-
-        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection();
-             java.sql.PreparedStatement ps = conn.prepareStatement(query);
-             java.sql.ResultSet rs = ps.executeQuery()) {
+        try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String nama = rs.getString("name");
-                String deskripsi = rs.getString("description");
+                String judul = rs.getString("title");
+                String isi = rs.getString("content");
+                String lokasi = rs.getString("location"); // Kalau mau dipakai di kartu nanti
+                String tanggal = rs.getString("news_date"); // Menangkap timestamp berita
 
-                // Instansiasi komponen kartu admin baru
-                com.alertnusa.view.ItemBencanaAdminPanel kartu = new com.alertnusa.view.ItemBencanaAdminPanel();
-
-                // Atur teks di dalam komponen kartu (sesuaikan nama label/text area di kartu adminmu)
-                // Contoh asumsi: kartu.lblJudul dan kartu.txtDeskripsi
-                kartu.lblJudul.setText(nama);
-
-                // Kunci ukuran komponen agar pas dengan batas BoxLayout (Lebar 380 agar muat di area 400)
-                java.awt.Dimension ukuranTetap = new java.awt.Dimension(380, 140);
-                kartu.setPreferredSize(ukuranTetap);
-                kartu.setMinimumSize(ukuranTetap);
-                kartu.setMaximumSize(ukuranTetap);
-                kartu.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-
-                // --- EVENT CLICK 1: KLIK KARTU UNTUK DETAIL POP-UP ---
-                kartu.addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        tampilkanDetailWindow(nama, deskripsi);
-                    }
-                });
-
-                // --- EVENT CLICK 2: TOMBOL HAPUS DATA ---
-                // Sesuaikan 'btnHapus' dengan nama variabel tombol hapus di ItemBencanaAdminPanel-mu
-                kartu.btnHapus.addActionListener(new java.awt.event.ActionListener() {
-                    @Override
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
-                            null, 
-                            "Apakah Anda yakin ingin menghapus data bencana '" + nama + "'?", 
-                            "Konfirmasi Hapus", 
-                            javax.swing.JOptionPane.YES_NO_OPTION,
-                            javax.swing.JOptionPane.WARNING_MESSAGE
-                        );
-
-                        if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
-                            hapusDataBencana(id);
-                        }
-                    }
-                });
-
-                katalogPanel.add(kartu);
-                katalogPanel.add(javax.swing.Box.createVerticalStrut(12)); // Jarak antar kartu
+                // 3. Masukkan data ke cetakan kartu berita abang
+                // Variabel 'tanggal' kita oper ke parameter constructor kartu
+                ItemBeritaAdminPanel kartu = new ItemBeritaAdminPanel(id, judul, tanggal, isi, this);
+                listBeritaContainer.add(kartu);
+                listBeritaContainer.add(javax.swing.Box.createVerticalStrut(12));
             }
 
-        } catch (Exception e) {
-            System.err.println("Error load katalog admin: " + e.getMessage());
+        } catch (java.sql.SQLException e) {
+            System.err.println("[AlertNusa] Gagal menarik data dari disaster_news: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        katalogPanel.revalidate();
-        katalogPanel.repaint();
+        // 4. Memicu GUI NetBeans merender ulang secara live
+        listBeritaContainer.revalidate();
+        listBeritaContainer.repaint();
+        jScrollPaneBerita.revalidate();
+        jScrollPaneBerita.repaint();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,18 +60,41 @@ public class admBencanaPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        katalogPanel = new javax.swing.JPanel();
+        jScrollPaneBerita = new javax.swing.JScrollPane();
+        listBeritaContainer = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(420, 720));
         setMinimumSize(new java.awt.Dimension(420, 720));
+
+        jPanel3.setBackground(new java.awt.Color(40, 40, 56));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 50));
+        jPanel3.setPreferredSize(new java.awt.Dimension(410, 50));
+        jPanel3.setLayout(new java.awt.GridLayout(1, 2, 20, 20));
+
+        jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Manajemen Berita");
+        jPanel3.add(jLabel2);
+
+        jButton8.setBackground(new java.awt.Color(0, 102, 102));
+        jButton8.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("+ Tambah");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
+        jButton8.addActionListener(this::jButton8ActionPerformed);
+        jPanel3.add(jButton8);
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
         jPanel2.setMaximumSize(new java.awt.Dimension(420, 720));
@@ -191,52 +117,19 @@ public class admBencanaPanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ALERTNUSA");
 
-        jPanel3.setBackground(new java.awt.Color(40, 40, 56));
-
-        jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Manajemen Bencana");
-
-        jButton8.setBackground(new java.awt.Color(255, 0, 0));
-        jButton8.setFont(new java.awt.Font("Poppins SemiBold", 0, 8)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("+ Tambah");
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton8)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jLabel4.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Katalog Bencana");
+        jLabel4.setText("Berita Bencana");
 
-        jScrollPane1.setBackground(new java.awt.Color(40, 40, 56));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(400, 500));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 500));
+        jScrollPaneBerita.setBackground(new java.awt.Color(40, 40, 56));
+        jScrollPaneBerita.setBorder(null);
+        jScrollPaneBerita.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPaneBerita.setMinimumSize(new java.awt.Dimension(400, 500));
+        jScrollPaneBerita.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        katalogPanel.setBackground(new java.awt.Color(40, 40, 56));
-        katalogPanel.setLayout(new javax.swing.BoxLayout(katalogPanel, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(katalogPanel);
+        listBeritaContainer.setBackground(new java.awt.Color(40, 40, 56));
+        listBeritaContainer.setLayout(new javax.swing.BoxLayout(listBeritaContainer, javax.swing.BoxLayout.LINE_AXIS));
+        jScrollPaneBerita.setViewportView(listBeritaContainer);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -246,20 +139,18 @@ public class admBencanaPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(92, 92, 92))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(97, 97, 97))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(92, 92, 92))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(109, 109, 109))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPaneBerita, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 22, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,12 +158,10 @@ public class admBencanaPanel extends javax.swing.JPanel {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneBerita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -280,20 +169,35 @@ public class admBencanaPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(593, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8MouseClicked
+
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (ancestor instanceof java.awt.Frame) {
+            // Mengirim 'this' (admBencanaPanel) ke dalam dialog tambah
+            TambahBeritaDialog dialog = new TambahBeritaDialog((java.awt.Frame) ancestor, true, this);
+            dialog.setVisible(true);
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
 
@@ -305,7 +209,7 @@ public class admBencanaPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel katalogPanel;
+    private javax.swing.JScrollPane jScrollPaneBerita;
+    private javax.swing.JPanel listBeritaContainer;
     // End of variables declaration//GEN-END:variables
 }

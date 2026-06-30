@@ -147,6 +147,11 @@ public class AdminPanel extends javax.swing.JPanel {
         jButton12.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
         jButton12.setText("Manajemen Konten");
+        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton12MouseClicked(evt);
+            }
+        });
         jButton12.addActionListener(this::jButton12ActionPerformed);
         mainPanelAdmin.add(jButton12);
 
@@ -226,7 +231,12 @@ public class AdminPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
+        java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (ancestor instanceof com.alertnusa.view.AdminFrame) {
+            com.alertnusa.view.AdminFrame af = (com.alertnusa.view.AdminFrame) ancestor;
+            af.panggilLayar("beritaPanel");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -258,6 +268,19 @@ public class AdminPanel extends javax.swing.JPanel {
             parentWindow.dispose();
         }    // TODO add your handling code here:
     }//GEN-LAST:event_jButton14MouseClicked
+
+    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
+        java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (ancestor instanceof com.alertnusa.view.AdminFrame) {
+            com.alertnusa.view.AdminFrame af = (com.alertnusa.view.AdminFrame) ancestor;
+
+            // Panggil card manajemen konten abang
+            // Pastikan kata "kontenPanel" ini sesuai dengan nama card/identitas 
+            // yang terdaftar di method panggilLayar milik AdminFrame ya!
+            af.panggilLayar("kontenPanel");
+        }            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
