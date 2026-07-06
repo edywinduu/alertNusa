@@ -77,7 +77,6 @@ public class userSession {
         }
     }
 
-    // Login dinamis: Membaca tabel users berdasarkan Username atau Email, cocokkan Password
     public static boolean login(String identifier, String password) {
         String query = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?";
         try (Connection conn = DatabaseConnection.getConnection();

@@ -7,6 +7,7 @@ com\alertnusa\view\LoginPanel$3.class
 com\alertnusa\view\TambahBeritaDialog$2.class
 com\alertnusa\view\ForgotPasswordPanel$1.class
 com\alertnusa\view\admUserPanel$3.class
+com\alertnusa\view\admKontenPanel$4.class
 com\alertnusa\view\RegisterPanel.class
 com\alertnusa\view\SOSPanel.class
 com\alertnusa\view\admKontenPanel$1.class
@@ -25,6 +26,7 @@ com\alertnusa\view\MainFrame$4.class
 com\alertnusa\main\App.class
 com\alertnusa\view\TambahSOSDialog.class
 com\alertnusa\view\AdminPanel$4.class
+com\alertnusa\view\admUserPanel$4.class
 com\alertnusa\view\ItemKatalogBencanaAdminPanel$1.class
 com\alertnusa\view\admKontenPanel$2.class
 com\alertnusa\view\TambahBeritaDialog$1.class
@@ -46,6 +48,7 @@ com\alertnusa\view\admUserPanel.class
 com\alertnusa\view\MainFrame.class
 com\alertnusa\view\DisasterCardPanel.class
 com\alertnusa\view\EvacuationPanel.class
+com\alertnusa\view\admBencanaPanel$2.class
 com\alertnusa\view\AdminFrame$1.class
 com\alertnusa\view\DashboardPanel$2.class
 com\alertnusa\view\admUserPanel$1.class

@@ -22,12 +22,10 @@ public class MainFrame extends javax.swing.JFrame {
         
         int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
                              ? com.alertnusa.model.userSession.getCurrentUser().getId() 
-                             : 0; // Jika Guest atau tidak login, set ke 0
-
-        // 2. Buat objek panel KESIANPAN tunggal
+                             : 0; 
+        
         PreparationPanel prepPanel = new PreparationPanel();
 
-        // 3. Daftarkan semua screen ke mainContent (Gunakan variabel 'prepPanel', JANGAN 'new' lagi!)
         mainPanel.add(new DashboardPanel(), "dashboard_screen");
         mainPanel.add(prepPanel, "preparation_screen"); // <-- Menggunakan objek yang sama!
         mainPanel.add(new EvacuationPanel(), "evacuation_screen"); // sesuaikan penamaan lamamu

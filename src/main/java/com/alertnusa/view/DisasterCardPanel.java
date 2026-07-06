@@ -127,8 +127,6 @@ public class DisasterCardPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(40, 40, 56));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -152,30 +150,11 @@ public class DisasterCardPanel extends javax.swing.JPanel {
         jTextArea1.setOpaque(false);
         jTextArea1.setPreferredSize(new java.awt.Dimension(84, 84));
         add(jTextArea1, java.awt.BorderLayout.CENTER);
-
-        jPanel1.setBackground(new java.awt.Color(40, 40, 56));
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButton9.setBackground(new java.awt.Color(0, 102, 102));
-        jButton9.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Baca Selengkapnya");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-        jPanel1.add(jButton9);
-
-        add(jPanel1, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        String namaBencanaDinamis = jLabel1.getText().trim();
-        tampilkanDetailKatalog(namaBencanaDinamis);
-    }//GEN-LAST:event_jButton9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

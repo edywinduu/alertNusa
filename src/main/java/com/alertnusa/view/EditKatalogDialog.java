@@ -66,11 +66,13 @@ public class EditKatalogDialog extends javax.swing.JDialog {
 
         txtEditDeskripsi.setBackground(new java.awt.Color(24, 24, 24));
         txtEditDeskripsi.setColumns(20);
+        txtEditDeskripsi.setForeground(new java.awt.Color(255, 255, 255));
         txtEditDeskripsi.setRows(5);
         jScrollPane1.setViewportView(txtEditDeskripsi);
 
         txtEditPrep.setBackground(new java.awt.Color(24, 24, 24));
         txtEditPrep.setColumns(20);
+        txtEditPrep.setForeground(new java.awt.Color(255, 255, 255));
         txtEditPrep.setRows(5);
         jScrollPane2.setViewportView(txtEditPrep);
 
@@ -126,28 +128,81 @@ public class EditKatalogDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        String query = "UPDATE disasters SET description = ?, preparation = ? WHERE id = ?";
+        String deskripsiBaru = txtEditDeskripsi.getText().trim();
+        String prepBaru = txtEditPrep.getText().trim();
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+        // Validasi input kosong
+        if (deskripsiBaru.isEmpty() || prepBaru.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom wajib diisi!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            ps.setString(1, txtEditDeskripsi.getText().trim());
-            ps.setString(2, txtEditPrep.getText().trim());
-            ps.setInt(3, idBencana);
+        // 2. Siapkan dua kueri UPDATE untuk masing-masing tabel
+        String queryDisaster = "UPDATE disasters SET description = ? WHERE id = ?";
+        String queryPrep = "UPDATE preparations SET description = ? WHERE id = ?";
+        
+        java.sql.Connection conn = null;
+        java.sql.PreparedStatement psDisaster = null;
+        java.sql.PreparedStatement psPrep = null;
 
-            int hasil = ps.executeUpdate();
-            if (hasil > 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Data Katalog Bencana berhasil diperbarui!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        try {
+            conn = com.alertnusa.util.DatabaseConnection.getConnection();
 
-                // Refresh list katalog di halaman admin utama secara live
+            // Matikan auto-commit demi keamanan (Prinsip Transaksi Database)
+            conn.setAutoCommit(false);
+
+            // KUERI 1: Perbarui deskripsi di tabel disasters
+            psDisaster = conn.prepareStatement(queryDisaster);
+            psDisaster.setString(1, deskripsiBaru);
+            psDisaster.setInt(2, idBencana);
+            psDisaster.executeUpdate();
+
+            // KUERI 2: Perbarui persiapan di tabel preparations berdasarkan disaster_id
+            psPrep = conn.prepareStatement(queryPrep);
+            psPrep.setString(1, prepBaru);
+            psPrep.setInt(2, idBencana); // idBencana bertindak sebagai disaster_id di tabel preparations
+            psPrep.executeUpdate();
+
+            // Jika kedua kueri sukses tanpa eror, commit perubahan ke database
+            conn.commit();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Data Katalog dan Persiapan Bencana berhasil diperbarui!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            // Pemicu Live Refresh halaman katalog utama admin
+            if (parentPanel != null) {
                 parentPanel.loadDataAdmin();
-
-                // Tutup pop-up dialog
-                this.dispose();
             }
 
-        } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengupdate database: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Tutup pop-up dialog edit
+            this.dispose();
+
+        } catch (java.sql.SQLException e) {
+            // Jika salah satu kueri gagal, batalkan semua perubahan agar data tidak korup
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (java.sql.SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui data: " + e.getMessage(), "Error Database", javax.swing.JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
+        } finally {
+            // Tutup semua resource database secara manual
+            try {
+                if (psDisaster != null) {
+                    psDisaster.close();
+                }
+                if (psPrep != null) {
+                    psPrep.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
         }    // TODO add your handling code here:
     }//GEN-LAST:event_btnSimpanActionPerformed
 
