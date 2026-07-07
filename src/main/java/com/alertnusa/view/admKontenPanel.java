@@ -218,7 +218,7 @@ public class admKontenPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton9)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
@@ -347,10 +347,10 @@ public class admKontenPanel extends javax.swing.JPanel {
 
         // 2. Jika ketemu dan benar itu AdminFrame, langsung suruh panggilLayar menu utama
         if (ancestor instanceof AdminFrame) {
-            AdminFrame frameUtama = (AdminFrame) ancestor;
+            AdminFrame af = (AdminFrame) ancestor;
 
             // Panggil fungsi bawaan abang, arahkan ke nama card menu utama admin (misal: "adminPanel")
-            frameUtama.panggilLayar("adminPanel");
+            af.panggilCard("dashboardAdmin");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9MouseClicked
 

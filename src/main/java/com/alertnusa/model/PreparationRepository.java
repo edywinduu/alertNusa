@@ -12,27 +12,6 @@ import java.util.List;
  * @author edy
  */
 public class PreparationRepository {
-    public List<PreparationItem> getAllPreparations() {
-        List<PreparationItem> list = new ArrayList<>();
-        String query = "SELECT * FROM preparations";
-        
-        try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery()) {
-
-           while (rs.next()) {
-               PreparationItem item = new PreparationItem();
-                       
-               item.setId(rs.getInt("id"));
-               item.setTitle(rs.getString("title"));
-               list.add(item);
-           }
-       } catch (SQLException e) {
-           System.err.println("Gagal mengambil data preparations: " + e.getMessage());
-       }
-       return list;
-    }
-    
     public void saveUserChecklist(int userId, List<Integer> checkedIds) {
         String deleteQuery = "DELETE FROM user_preparations WHERE user_id = ?";
         String insertQuery = "INSERT INTO user_preparations (user_id, preparation_id) VALUES (?, ?)";
@@ -68,24 +47,6 @@ public class PreparationRepository {
         }
     }
     
-    public List<Integer> getCheckedPreparationIds(int userId) {
-        List<Integer> checkedIds = new ArrayList<>();
-        String query = "SELECT preparation_id FROM user_preparations WHERE user_id = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    checkedIds.add(rs.getInt("preparation_id"));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Gagal mengambil status centang user: " + e.getMessage());
-        }
-        return checkedIds;
-    }
     public int getPreparationPercentage(int userId) {
         int totalItems = 0;
         int completedItems = 0;

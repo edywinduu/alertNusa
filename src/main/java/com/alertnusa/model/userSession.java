@@ -112,11 +112,6 @@ public class userSession {
         return false;
     }
     
-    public static void loginAsGuest() {
-            currentUser = null; // Menandakan bahwa yang aktif adalah Guest
-            System.out.println("Masuk sebagai Guest (Sesi User Kosong).");
-        }
-    
     // Reset password langsung update baris di database MySQL
     public static boolean resetPassword(String username, String email, String newPassword) {
         String query = "UPDATE users SET password = ? WHERE username = ? AND email = ?";

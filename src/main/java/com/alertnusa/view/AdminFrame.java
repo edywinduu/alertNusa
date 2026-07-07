@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.alertnusa.view;
-import com.alertnusa.view.admBencanaPanel;
 /**
  *
  * @author edy
@@ -20,24 +19,16 @@ public class AdminFrame extends javax.swing.JFrame {
         this.setSize(420,720);
         setLocationRelativeTo(null);
         
-        adminCardPanel.add(new AdminPanel(), "adminPanel");
-        adminCardPanel.add(new admKontenPanel(), "kontenPanel");
-        adminCardPanel.add(new admUserPanel(), "userPanel");
-        
-        java.awt.CardLayout cl = (java.awt.CardLayout) adminCardPanel.getLayout();
-        cl.show(adminCardPanel, "adminPanel");
+        panggilCard("dashboardAdmin");
     }
-    public void panggilLayar(String namaCard) {
-            // Asumsi 'mainPanel' adalah variabel JPanel utama abang yang menggunakan CardLayout
+    public void panggilCard(String namaCardTujuan) {
+        if (adminCardPanel != null && adminCardPanel.getLayout() instanceof java.awt.CardLayout) {
             java.awt.CardLayout cl = (java.awt.CardLayout) adminCardPanel.getLayout();
-            cl.show(adminCardPanel, namaCard);
-            
-            if (namaCard.equals("beritaPanel")) {
-            if (admBencanaPanel != null) {
-                admBencanaPanel.loadDataBerita(); // Fungsi kueri database berita
-            }
+            cl.show(adminCardPanel, namaCardTujuan);
+        } else {
+            System.err.println("[AlertNusa Error] mainPanel tidak menggunakan CardLayout atau bernilai null!");
         }
-        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

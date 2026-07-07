@@ -22,30 +22,12 @@ public class MainFrame extends javax.swing.JFrame {
         
         int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
                              ? com.alertnusa.model.userSession.getCurrentUser().getId() 
-                             : 0; 
-        
-        PreparationPanel prepPanel = new PreparationPanel();
+                             : 0;
 
-        mainPanel.add(new DashboardPanel(), "dashboard_screen");
-        mainPanel.add(prepPanel, "preparation_screen"); // <-- Menggunakan objek yang sama!
-        mainPanel.add(new EvacuationPanel(), "evacuation_screen"); // sesuaikan penamaan lamamu
-        mainPanel.add(new SOSPanel(), "sos_screen");
-        mainPanel.add(new LoginPanel(), "login_screen");
-        mainPanel.add(new RegisterPanel(), "register_screen");
-        mainPanel.add(new ForgotPasswordPanel(), "fgpassword_screen");
-
-        // 4. Perintahkan controller untuk memuat data berdasarkan user yang sedang aktif
-        if (prepPanel.getPrepController() != null) {
-            prepPanel.getPrepController().loadPreparationData(loggedInUserId);
-        }
-
-        // Tampilkan halaman utama dashboard terlebih dahulu
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "dashboard_screen");
+        panggilCard("dashboard_screen");
 
         mainPanel.revalidate();
         mainPanel.repaint();
-        
     }
     public void panggilCard(String namaCardTujuan) {
         if (mainPanel != null && mainPanel.getLayout() instanceof java.awt.CardLayout) {
@@ -168,41 +150,24 @@ public class MainFrame extends javax.swing.JFrame {
     private void homeV1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV1MouseClicked
         int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
                             ? com.alertnusa.model.userSession.getCurrentUser().getId() 
-                            : 0; 
-
-       // Cari panel yang sudah tertanam di CardLayout tanpa menumpuknya dari awal
-       for (java.awt.Component comp : mainPanel.getComponents()) {
-           if (comp instanceof PreparationPanel) {
-               PreparationPanel prepPanel = (PreparationPanel) comp;
-               if (prepPanel.getPrepController() != null) {
-                   // Paksa sedot data teranyar milik user aktif dari database
-                   prepPanel.getPrepController().loadPreparationData(loggedInUserId);
-               }
-               break;
-           }
-       }
-
-       java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-       cl.show(mainPanel, "preparation_screen");
+                            : 0;
         
-        // 4. Render ulang container utama
+        panggilCard("preparation_screen");
+        
         mainPanel.revalidate();
         mainPanel.repaint();
     }//GEN-LAST:event_homeV1MouseClicked
 
     private void homeV2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV2MouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "evacuation_screen");    // TODO add your handling code here:
+        panggilCard("evacuation_screen");
     }//GEN-LAST:event_homeV2MouseClicked
 
     private void homeV3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV3MouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "sos_screen");
+        panggilCard("sos_screen");
     }//GEN-LAST:event_homeV3MouseClicked
 
     private void homeVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeVMouseClicked
-        java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "dashboard_screen");    // TODO add your handling code here:
+        panggilCard("dashboard_screen");
     }//GEN-LAST:event_homeVMouseClicked
 
     /**

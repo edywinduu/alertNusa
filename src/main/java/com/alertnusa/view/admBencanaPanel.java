@@ -224,10 +224,10 @@ public class admBencanaPanel extends javax.swing.JPanel {
 
         // 2. Jika ketemu dan benar itu AdminFrame, langsung suruh panggilLayar menu utama
         if (ancestor instanceof AdminFrame) {
-            AdminFrame frameUtama = (AdminFrame) ancestor;
+            AdminFrame af = (AdminFrame) ancestor;
 
             // Panggil fungsi bawaan abang, arahkan ke nama card menu utama admin (misal: "adminPanel")
-            frameUtama.panggilLayar("adminPanel");
+            af.panggilCard("dashboardAdmin");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9MouseClicked
 

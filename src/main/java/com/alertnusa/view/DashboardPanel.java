@@ -59,13 +59,6 @@ public class DashboardPanel extends javax.swing.JPanel {
             
             if (currentUser != null) {
                 welcomeLabel.setText("Selamat Datang, " + currentUser.getUsername() + "!");
-                
-                // Ambil MainFrame selaku induk jendelanya
-                java.awt.Window ancestor = javax.swing.SwingUtilities.getWindowAncestor(this);
-                
-                if (ancestor instanceof MainFrame) {
-                    MainFrame mf = (MainFrame) ancestor;
-                }
             }
         } catch (Exception e) {
             System.err.println("Error check role dashboard: " + e.getMessage());
@@ -284,7 +277,7 @@ public class DashboardPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
@@ -300,40 +293,18 @@ public class DashboardPanel extends javax.swing.JPanel {
 
     } else {
         userSession.logout();
-
-        java.awt.Container parentFrame = javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        if (parentFrame instanceof MainFrame) {
-            MainFrame mainFrame = (MainFrame) parentFrame;
-
-            // Loop semua komponen yang ada di dalam mainContent milik MainFrame
-            for (java.awt.Component compFrame : mainFrame.getComponents()) {
-                // Cari panel kontainer utama, atau langsung cari PreparationPanel-nya di dalam layer mana saja
-                if (compFrame instanceof java.awt.Container) {
-                    java.awt.Container ct = (java.awt.Container) compFrame;
-                    for (java.awt.Component child : ct.getComponents()) {
-                        if (child instanceof PreparationPanel) {
-                            PreparationPanel prepPanel = (PreparationPanel) child;
-                            if (prepPanel.getPrepController() != null) {
-                                prepPanel.getPrepController().loadPreparationData(0);
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        } // <-- Kurung kurawal penutup MainFrame ditaruh tegas di sini
-
-        // 3. Segarkan UI tulisan/status tombol logout menjadi Login kembali
+        
         loginUpdate(); // Segarkan tulisan menjadi Guest
+        
         java.awt.Container parent = this.getParent();
         if (parent != null && parent.getLayout() instanceof java.awt.CardLayout) {
             java.awt.CardLayout cl = (java.awt.CardLayout) parent.getLayout();
             cl.show(parent, "login_screen");
         }
 
+        // 4. Tampilkan notifikasi sukses logout
         javax.swing.JOptionPane.showMessageDialog(this, "Anda telah berhasil Logout.", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    } // <-- Penutup akhir blok else   // TODO add your handling code here:
+        }
     }//GEN-LAST:event_loginButtonMouseClicked
 
 

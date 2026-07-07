@@ -235,7 +235,7 @@ public class AdminPanel extends javax.swing.JPanel {
 
         if (ancestor instanceof com.alertnusa.view.AdminFrame) {
             com.alertnusa.view.AdminFrame af = (com.alertnusa.view.AdminFrame) ancestor;
-            af.panggilLayar("beritaPanel");
+            af.panggilCard("beritaPanel");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton15ActionPerformed
 
@@ -249,7 +249,7 @@ public class AdminPanel extends javax.swing.JPanel {
         if (ancestor instanceof com.alertnusa.view.AdminFrame) {
             com.alertnusa.view.AdminFrame af = (com.alertnusa.view.AdminFrame) ancestor;
             
-            af.panggilLayar("userPanel"); 
+            af.panggilCard("userPanel"); 
         }        
     }//GEN-LAST:event_jButton11MouseClicked
 
@@ -278,7 +278,7 @@ public class AdminPanel extends javax.swing.JPanel {
             // Panggil card manajemen konten abang
             // Pastikan kata "kontenPanel" ini sesuai dengan nama card/identitas 
             // yang terdaftar di method panggilLayar milik AdminFrame ya!
-            af.panggilLayar("kontenPanel");
+            af.panggilCard("kontenPanel");
         }            // TODO add your handling code here:
     }//GEN-LAST:event_jButton12MouseClicked
 

@@ -20,11 +20,6 @@ public class PreparationPanel extends javax.swing.JPanel {
         loadChecklistBencana();
         this.prepController = new com.alertnusa.controller.PreparationController(this);
         
-        try {
-            this.prepController.loadPreparationData(1);
-        } catch (Exception e) {
-            System.err.println("Error pemicuan mandiri panel: " + e.getMessage());
-        }
     }
     
     public void initDropdownBencana() {

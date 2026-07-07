@@ -29,8 +29,5 @@ public class PreparationController {
     public void loadPreparationData(int userId) {
         System.out.println("[AlertNusa] Menggunakan load dinamis di panel view.");
     }
-
-    public void saveChecklist(int userId, List<Integer> checkedIds) {
-        repo.saveUserChecklist(userId, checkedIds);
-    }
+    
 }
