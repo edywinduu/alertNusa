@@ -239,12 +239,10 @@ public class admKontenPanel extends javax.swing.JPanel {
         java.awt.CardLayout cl = (java.awt.CardLayout) mainContainerAdmin.getLayout();
         cl.show(mainContainerAdmin, "katalogPage");
 
-        // 2. PAKSA JALAN METHOD PENARIK DATA DARI DATABASENYA DI SINI, BLI!
         this.loadDataAdmin();
         listKontenKatalog.removeAll();
         listKontenKatalog.setLayout(new javax.swing.BoxLayout(listKontenKatalog, javax.swing.BoxLayout.Y_AXIS));
 
-        // Kueri yang sudah disesuaikan dengan gambar image_e605e4.png
         String query = "SELECT id, disaster_name, description, category, risk_level FROM disasters ORDER BY id ASC";
 
         try (java.sql.Connection conn = com.alertnusa.util.DatabaseConnection.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(query); java.sql.ResultSet rs = ps.executeQuery()) {

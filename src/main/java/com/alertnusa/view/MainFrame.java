@@ -19,11 +19,6 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
-        
-        int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
-                             ? com.alertnusa.model.userSession.getCurrentUser().getId() 
-                             : 0;
-
         panggilCard("dashboard_screen");
 
         mainPanel.revalidate();
@@ -148,10 +143,6 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeV1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeV1MouseClicked
-        int loggedInUserId = com.alertnusa.model.userSession.isLoggedIn() 
-                            ? com.alertnusa.model.userSession.getCurrentUser().getId() 
-                            : 0;
-        
         panggilCard("preparation_screen");
         
         mainPanel.revalidate();
@@ -193,13 +184,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
-    }
-    public void panggilLayar(String namaCard) {
-        // GANTI 'mainPanel' dengan nama variabel JPanel pembungkus CardLayout milikmu yang dicatat di Langkah 1 tadi!
-        if (mainPanel.getLayout() instanceof java.awt.CardLayout) {
-            java.awt.CardLayout cl = (java.awt.CardLayout) mainPanel.getLayout();
-            cl.show(mainPanel, namaCard);
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

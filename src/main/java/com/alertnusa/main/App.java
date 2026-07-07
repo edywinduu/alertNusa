@@ -22,8 +22,7 @@ public class App {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             System.out.println("Gagal memuat tema Nimbus: " + ex.getMessage());
         }
-
-        // 2. BARU PANGGIL DASHBOARD-NYA
+          
         java.awt.EventQueue.invokeLater(() -> {
             new MainFrame().setVisible(true);
         });
